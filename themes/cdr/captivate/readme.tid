@@ -1,0 +1,19 @@
+title: $:/themes/cdr/captivate/readme
+
+A clean, functional theme for [[TiddlyWiki|https://tiddlywiki.com]].
+
+!! Features
+
+* Quick and easy personalization of your wiki's colors
+* Dual layouts&mdash;captivate themed and ~TiddlyWiki's default layouts
+* Graceful fallback of display-p3 palette entries in non-supporting browsers 
+
+!! Installation
+
+To add this theme to your own ~TiddlyWiki
+
+# Drag the following links to your wiki:
+#* [[$:/themes/cdr/captivate]]
+#* [[$:/plugins/cdr/colorlab]]
+# Save and reload
+# Select ''Captivate'' theme in [[$:/ControlPanel]] > Appearance > Theme

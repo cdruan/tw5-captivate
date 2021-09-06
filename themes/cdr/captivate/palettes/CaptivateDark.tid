@@ -1,0 +1,115 @@
+type: application/x-tiddler-dictionary
+title: $:/themes/cdr/captivate/palettes/CaptivateDark
+name: Captivate Dark
+description: Your dark themed palette
+
+alert-background: #660015
+alert-border: <<colour very-muted-foreground>>
+alert-highlight: #ff8b69
+alert-muted-foreground: <<colour tiddler-subtitle-foreground:>>
+background: {{{ [colour[primary]mix[#2b2b2b],[0.80]lightness[17]] }}}
+blockquote-bar: #505050
+button-background: <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-primary}} value="min(35)" />
+button-foreground: <<colour on-primary>>
+button-border: <<colour button-background>>
+code-background: <$macrocall $name="color-mix" color1=<<colour background>> color2="#ffffff" weight="0.06" />
+code-border: transparent
+code-foreground: <<colour foreground>>
+dirty-indicator: #ff0000
+download-background: <<colour button-background>>
+download-foreground: <<colour on-primary>>
+dragger-background: <<colour foreground>>
+dragger-foreground: <<colour background>>
+dropdown-background: #424242
+dropdown-border: <<colour dropdown-background>>
+dropdown-tab-background-selected: <<colour dropdown-background>>
+dropdown-tab-background: #050505
+dropzone-background: <<colour tag-background>>
+external-link-background-hover: transparent
+external-link-background-visited: transparent
+external-link-background: transparent
+external-link-foreground-hover: <<colour tiddler-link-foreground>>
+external-link-foreground-visited: <<colour tiddler-link-foreground>>
+external-link-foreground: <<colour tiddler-link-foreground>>
+foreground: #e0e0e0
+message-background: #014272
+message-border: <<colour message-background>>
+message-foreground: <<colour foreground>>
+modal-backdrop: <<colour page-background>>
+modal-background: <<colour background>>
+modal-border: <<colour very-muted-foreground>>
+modal-footer-background: <<colour very-muted-foreground>>
+modal-footer-border: <<colour very-muted-foreground>>
+modal-header-border: <<colour very-muted-foreground>>
+muted-foreground: #a8a8a8
+notification-background: <<colour dropdown-background>>
+notification-border: <<colour dropdown-background>>
+page-background: {{{ [colour[primary]mix[#121212],[0.80]lightness[8]] }}}
+pre-background: <<colour code-background>>
+pre-border: <<colour code-background>>
+primary: {{$:/themes/cdr/captivate/settings/color-primary}} 
+secondary-button-background: <$macrocall $name="color-lightness" color=<<colour primary>> value="85" />
+secondary-button-foreground: <$macrocall $name="color-lightness" color=<<colour primary>> value="30" />
+secondary-button-border: <$macrocall $name="color-lightness" color=<<colour primary>> value="60" />
+selection-background: {{{ [colour[primary]lightness[35]alpha[0.8]] }}}
+selection-background-save: <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-primary}} value="28" />
+selection-foreground: <<colour foreground>>
+sidebar-button-foreground: <<colour on-primary>>
+sidebar-controls-foreground-hover: #FFFFFF
+sidebar-controls-foreground: #aaaaaa
+sidebar-foreground-shadow: transparent
+sidebar-foreground: <<colour foreground>>
+sidebar-muted-foreground-hover: <<colour foreground>>
+sidebar-muted-foreground: <<colour muted-foreground>>
+sidebar-tab-background-selected: <<colour tab-background-selected>>
+sidebar-tab-background: transparent
+sidebar-tab-border-selected: <<colour tab-border-selected>>
+sidebar-tab-border: transparent
+sidebar-tab-divider: <<colour tab-divider>>
+sidebar-tab-foreground-selected: <<colour tab-foreground-selected>>
+sidebar-tab-foreground: <<colour tab-foreground>>
+sidebar-tiddler-link-foreground-hover: <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-primary}} value="73" />
+sidebar-tiddler-link-foreground: <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-primary}} value="65" />
+site-title-foreground: #b2b2b2
+static-alert-foreground: #B48EAD
+tab-background-selected: {{{ [colour[primary]lightness[28]alpha[0.8]] }}}
+tab-background: transparent 
+tab-border-selected: <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-primary}} value="60" />
+tab-border: transparent
+tab-divider: #585858
+tab-foreground-selected: <$macrocall $name="color-autocontrast" color=<<colour tab-background-selected>> />
+tab-foreground: <<colour muted-foreground>>
+table-border: #535353
+table-footer-background: <<colour tiddler-editor-fields-odd>>
+table-header-background: <<colour tiddler-editor-fields-even>>
+tag-background:  <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-secondary}} value="min(25)" />
+tag-foreground: <$macrocall $name="color-autocontrast" color=<<colour tag-background>> />
+tiddler-background: <<colour background>>
+tiddler-border: <<colour background>>
+tiddler-controls-foreground-hover: #d0d0d0
+tiddler-controls-foreground-selected: #d0d0d0
+tiddler-controls-foreground: #818181
+tiddler-editor-background: #121212
+tiddler-editor-border-image: 
+tiddler-editor-border: <$macrocall $name="color-mix" color1=<<colour tiddler-editor-background>> color2="#f0f0f0" weight="0.3" />
+tiddler-editor-fields-even: rgba(255, 255, 255, 0.15)
+tiddler-editor-fields-odd: rgba(255, 255, 255, 0.05)
+tiddler-info-background: <$macrocall $name="color-mix" color1=<<colour background>> color2="#808080" weight="0.13" />
+tiddler-info-border: <<colour tiddler-info-background>>
+tiddler-info-tab-background: <<colour tab-background-selected>>
+tiddler-link-background: <<colour background>>
+tiddler-link-foreground: <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-link}} value={{$:/themes/cdr/captivate/settings/text-on-dark}} />
+tiddler-subtitle-foreground: #bababa
+tiddler-title-foreground: <<colour foreground>>
+toolbar-new-button: 
+toolbar-options-button: 
+toolbar-save-button: 
+toolbar-info-button: 
+toolbar-edit-button: 
+toolbar-close-button: 
+toolbar-delete-button: 
+toolbar-cancel-button: 
+toolbar-done-button: 
+untagged-background: <<colour muted-foreground>>
+very-muted-foreground: #808080
+on-primary: <$macrocall $name="color-autocontrast" color={{$:/themes/cdr/captivate/settings/color-primary}} />

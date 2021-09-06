@@ -1,0 +1,13 @@
+title: $:/themes/cdr/captivate/
+
+settings/fontfamily: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji"
+settings/codefontfamily: ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,"Liberation Mono",monospace
+settings/editorfontfamily: ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,"Liberation Mono",monospace
+settings/accent-topbar: yes
+settings/color-primary: #01579B
+settings/color-secondary: #0190fe
+settings/color-link: #cfd8dc
+settings/palette-theme: light
+settings/text-on-dark: range(63,95)
+settings/text-on-light: range(10,48)
+settings/tiddlerwidth: 900px

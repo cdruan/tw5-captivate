@@ -1,0 +1,116 @@
+title: $:/palettes/CaptivateTan
+name: Captivate Tan
+description: Your tan color palette
+source: $:/themes/cdr/captivate/palettes/CaptivateTan
+tags: $:/tags/Palette
+type: application/x-tiddler-dictionary
+
+alert-background: #ffe476
+alert-border: #c0c0c0
+alert-highlight: #881122
+alert-muted-foreground: #7d7d7d
+background: #fbfbf2
+blockquote-bar: #d0d0d0
+button-background: rgb(97,123,188)
+button-foreground: #ffffff
+button-border: rgb(97,123,188)
+code-background: #ececec
+code-border: transparent
+code-foreground: #303030
+dirty-indicator: #ff0000
+download-background: rgb(97,123,188)
+download-foreground: #ffffff
+dragger-background: #303030
+dragger-foreground: #fbfbf2
+dropdown-background: #FFFFFF
+dropdown-border: #FFFFFF
+dropdown-tab-background-selected: #FFFFFF
+dropdown-tab-background: #F5F5F5
+dropzone-background: rgb(227,202,124)
+external-link-background-hover: #fbfbf2
+external-link-background-visited: #fbfbf2
+external-link-background: #fbfbf2
+external-link-foreground-hover: rgb(0,116,214)
+external-link-foreground-visited: rgb(0,116,214)
+external-link-foreground: rgb(0,116,214)
+foreground: #303030
+message-background: #ecf2ff
+message-border: #c0c0c0
+message-foreground: #7d7d7d
+modal-backdrop: #303030
+modal-background: #fbfbf2
+modal-border: #c0c0c0
+modal-footer-background: #f5f5f5
+modal-footer-border: #ddd
+modal-header-border: #eee
+muted-foreground: #7d7d7d
+notification-background: #FFFFFF
+notification-border: #FFFFFF
+page-background: #f5f2e4
+pre-background: #ececec
+pre-border: rgba(0, 0, 0, 0.1)
+primary: rgb(97,123,188)
+secondary-button-background: rgb(218,230,255)
+secondary-button-foreground: rgb(58,80,142)
+secondary-button-border: rgb(117,144,210)
+selection-background: rgb(206,221,255)
+selection-foreground: #303030
+sidebar-button-foreground: #ffffff
+sidebar-controls-foreground-hover: #000000
+sidebar-controls-foreground: #aaaaaa
+sidebar-foreground-shadow: transparent
+sidebar-foreground: #303030
+sidebar-muted-foreground-hover: #303030
+sidebar-muted-foreground: #7d7d7d
+sidebar-tab-background-selected: #ebebc9
+sidebar-tab-background: transparent
+sidebar-tab-border-selected: rgb(97,123,188)
+sidebar-tab-border: transparent
+sidebar-tab-divider: #c0c0c0
+sidebar-tab-foreground-selected: rgb(83,115,211)
+sidebar-tab-foreground: #7d7d7d
+sidebar-tiddler-link-foreground-hover: rgb(40,63,155)
+sidebar-tiddler-link-foreground: rgb(71,102,197)
+site-title-foreground: #202020
+static-alert-foreground: #aaaaaa
+tab-background-selected: #ebebc9
+tab-background: transparent
+tab-border-selected: rgb(87,120,216)
+tab-border: transparent
+tab-divider: #c0c0c0
+tab-foreground-selected: #303030
+tab-foreground: #7d7d7d
+table-border: #e0e0e0
+table-footer-background: rgba(0, 0, 0, 0.04)
+table-header-background: rgba(0, 0, 0, 0.1)
+tag-background: rgb(227,202,124)
+tag-foreground: rgb(61,46,0)
+tiddler-background: #fbfbf2
+tiddler-border: #fbfbf2
+tiddler-controls-foreground-hover: #202020
+tiddler-controls-foreground-selected: #202020
+tiddler-controls-foreground: #c0c0c0
+tiddler-editor-background: #f8f8f8
+tiddler-editor-border-image: 
+tiddler-editor-border: rgb(212,212,212)
+tiddler-editor-fields-even: rgba(0, 0, 0, 0.1)
+tiddler-editor-fields-odd: rgba(0, 0, 0, 0.04)
+tiddler-info-background: rgb(241,241,233)
+tiddler-info-border: #F5F5F5
+tiddler-info-tab-background: #ebebc9
+tiddler-link-background: #fbfbf2
+tiddler-link-foreground: rgb(0,116,214)
+tiddler-subtitle-foreground: #7d7d7d
+tiddler-title-foreground: #303030
+toolbar-new-button: 
+toolbar-options-button: 
+toolbar-save-button: 
+toolbar-info-button: 
+toolbar-edit-button: 
+toolbar-close-button: 
+toolbar-delete-button: 
+toolbar-cancel-button: 
+toolbar-done-button: 
+untagged-background: #c0c0c0
+very-muted-foreground: #c0c0c0
+on-primary: #ffffff

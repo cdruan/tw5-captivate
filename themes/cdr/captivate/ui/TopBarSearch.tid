@@ -1,0 +1,78 @@
+title: $:/themes/cdr/captivate/ui/TopBar/Search
+
+\define advanced-search-actions() 
+<$action-setfield $tiddler="$:/temp/advancedsearch" text={{{ [<searchTiddler>get[text]] }}}/>
+<$action-setfield $tiddler="$:/temp/advancedsearch/input" text={{{ [<searchTiddler>get[text]] }}}/>
+<$action-navigate $to="$:/AdvancedSearch"/>
+<$action-setfield $tiddler="$:/temp/advancedsearch/refresh" text="yes"/>
+<$action-sendmessage $message="tm-focus-selector" $param="""[data-tiddler-title="$:/AdvancedSearch"] .tc-search input""" preventScroll="true"/>
+<$action-deletetiddler $filter="[<searchTiddler>] $:/temp/search/input $:/temp/search/refresh $:/temp/search/selected-item"/>
+\end
+
+\define cancel-search-actions() <$list filter="[[$:/temp/advancedsearch]get[text]!match{$:/temp/search}]" emptyMessage="""<$action-deletetiddler $filter="[[$:/temp/search]] [$:/temp/advancedsearch]"/>"""><$action-setfield $tiddler="$:/temp/search" text={{{ [[$:/temp/advancedsearch]get[text]] }}}/><$action-setfield $tiddler="$:/temp/search/refresh" text="yes"/></$list>
+
+<!--
+<div class="tc-search">
+<$keyboard key="((input-tab-right))" actions=<<set-next-input-tab>>>
+<$keyboard key="((input-tab-left))" actions=<<set-next-input-tab "before">>>
+<$macrocall $name="keyboard-driven-input" tiddler="$:/temp/advancedsearch/input" storeTitle="$:/temp/advancedsearch"
+		refreshTitle="$:/temp/advancedsearch/refresh" selectionStateTitle="$:/temp/advancedsearch/selected-item" type="search"
+		tag="input" focus={{$:/config/Search/AutoFocus}} configTiddlerFilter="[[$:/core/ui/AdvancedSearch/Shadows]]"
+		inputCancelActions=<<cancel-search-actions>> inputAcceptActions=<<input-accept-actions>> 
+		inputAcceptVariantActions=<<input-accept-variant-actions>>  filterMinLength={{$:/config/Search/MinLength}}/>
+</$keyboard>
+</$keyboard>
+<$reveal state="$:/temp/advancedsearch" type="nomatch" text="">
+<$button class="tc-btn-invisible">
+<<cancel-search-actions>>
+{{$:/core/images/close-button}}
+</$button>
+</$reveal>
+</div>
+-->
+
+<$vars searchTiddler=<<qualify "$:/temp/search">> >
+<div class="cv-search-bar">
+  <!--~~ See Also: $:/core/ui/SideBarSegments/search ~~-->
+  <$macrocall $name="keyboard-driven-input" 
+              tiddler=<<searchTiddler>>
+              storeTitle="$:/temp/advancedsearch"
+              selectionStateTitle="$:/temp/search/selected-item"
+              inputCancelActions="""<$action-setfield $tiddler=<<searchTiddler>> $value=""/>"""
+              configTiddlerFilter="[[$:/state/search/currentTab]!is[missing]get[text]] ~[{$:/config/SearchResults/Default}]"
+              filterMinLength={{$:/config/Search/MinLength}} 
+              refreshTitle="$:/temp/search/refresh" 
+              type="search" 
+              tag="input" 
+              focus="no" 
+              placeholder="search..."
+              focusPopup=<<qualify "$:/state/popup/search-dropdown">>
+              class="tc-popup-handle" 
+              cancelPopups="yes" />
+  <$button tooltip={{$:/language/Buttons/AdvancedSearch/Hint}} aria-label={{$:/language/Buttons/AdvancedSearch/Caption}} class="tc-btn-invisible">
+  <<advanced-search-actions>>
+  {{$:/core/images/advanced-search-button}}
+  </$button>
+  <!--~~ topbar search dropdown ~~-->
+
+<$reveal tag="div" class="tc-block-dropdown-wrapper" state=<<searchTiddler>> type="nomatch" text="">
+<$reveal tag="div" class="tc-block-dropdown tc-search-drop-down cv-search-dropdown tc-popup-handle" state=<<qualify "$:/state/popup/search-dropdown">> type="nomatch" text="">
+  <$list filter="[{$:/temp/advancedsearch}minlength{$:/config/Search/MinLength}limit[1]]"
+    emptyMessage="""
+    <div style="padding: 16px 28px;">
+    {{$:/language/Search/Search/TooShort}}.
+    </div>
+    """ 
+    variable="listItem">
+    <!-- <style>.tc-block-dropdown.tc-search-drop-down { display: flex; }</style> -->
+    <$macrocall $name="tabs" 
+                tabsList="[all[shadows+tiddlers]tag[$:/tags/AdvancedSearch]!has[draft.of]]"
+                default="$:/core/ui/AdvancedSearch/Standard" 
+                actions="""<$action-setfield $tiddler="$:/state/advancedsearch/currentTab" text=<<currentTab>>/>""" 
+                state="$:/state/search/currentTab"/>
+  </$list>
+</$reveal>
+</$reveal>
+
+</div> <!-- end of search bar -->
+</$vars>

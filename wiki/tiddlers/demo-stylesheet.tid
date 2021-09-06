@@ -1,0 +1,18 @@
+created: 20210506110709026
+tags: $:/tags/Stylesheet
+title: Demo Stylesheet
+type: text/css
+
+.demo-colorbox{
+  display: inline-block;
+  font-weight:500;
+  text-align:center;
+  width:190px;
+  margin:10px 5px 0px;
+  padding:15px 10px; 
+}
+
+.demo-rangectrl {
+  margin: 3px 10px 0px;
+  width: 45%;
+}

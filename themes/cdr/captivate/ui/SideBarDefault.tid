@@ -1,0 +1,4 @@
+title: $:/themes/cdr/captivate/ui/SideBar/default
+description: determines default sidebar setting (open or closed)
+
+[{$:/info/browser/screen/width}] [{$:/info/browser/screen/height}] +[minall[]compare:number:gt[1024]then[yes]else[no]]

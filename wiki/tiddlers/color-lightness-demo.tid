@@ -1,0 +1,69 @@
+created: 20210506110709026
+modified: 20210727094705053
+title: Color Lightness Demo
+tags: TOC
+type: text/vnd.tiddlywiki
+samples: #098cff  #cddc39  #511ab2  #d3effd
+
+\define tempTiddler() $:/temp/demo/lch
+
+\define colorboxStyle()
+background-color:<$macrocall $name="color-eval" color="$(color)$" />;
+border-color:$(color)$;
+color:<$macrocall $name="color-autocontrast" color="$(color)$" />;
+font-size:0.95em;
+width: 220px;
+\end
+
+\define colortextStyle()
+color:$(color)$;
+text-align: center;
+font-weight: 400;
+\end
+
+\define showResult()
+<$wikify name=color text="""<$macrocall $name="color-lightness" color={{{[<tempTiddler>get[result]] ~[[#000000]]}}} value={{{[<tempTiddler>get[text]] ~[[0]]}}}/>""">
+<$wikify name=boxstyle text=<<colorboxStyle>> >
+	<span class="demo-colorbox" style=<<boxstyle>> >
+	<$text text=<<color>> />
+	</span> <span style=<<colortextStyle>> > sample text </span>
+</$wikify>
+</$wikify>
+\end
+
+<div style="display:flex;align-items:center">
+Lightness:
+<$range class="demo-rangectrl" tiddler=<<tempTiddler>> min="0" max="100" default="0" increment="1"/>
+<$text text={{{[<tempTiddler>get[text]fixed[2]]}}}/>
+</div>
+<<showResult>>
+
+<p>Enter a color and click on the ''Reset'' button to see the color's lightness value:</p>
+<$edit-text tiddler=<<tempTiddler>> field="initial" placeholder="css color string" default=""/>&ensp;
+<$wikify name=initialLight text="""<$macrocall $name="color-lightness" color={{{[<tempTiddler>get[initial]]}}} />""">
+<$button>
+<$action-setfield $tiddler=<<tempTiddler>> text=<<initialLight>> result={{{ [<tempTiddler>get[initial]] }}} />Reset
+</$button>
+</$wikify>
+
+!! Sample Colors:
+
+Click on a color to see its lightness value.
+
+<div style="margin-top:10px; display:flex; flex-flow: row wrap;">
+<$list filter="[list[!!samples]]" variable="color">
+<div style=<<colortextStyle>>>
+	<$wikify name=boxstyle text=<<colorboxStyle>> >
+	<$button class="demo-colorbox" style=<<boxstyle>> >
+	<$text text=<<color>> />
+	<$wikify name=initialLight text="""<$macrocall $name="color-lightness" color=<<color>> />""">
+		<$action-setfield $tiddler=<<tempTiddler>> text=<<initialLight>> result=<<color>> initial=<<color>> />
+	</$wikify>
+	</$button>
+	</$wikify><br/>
+	Hello World
+</div>
+
+</$list>
+</div>
+

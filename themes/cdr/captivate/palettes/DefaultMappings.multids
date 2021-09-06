@@ -1,0 +1,9 @@
+title: $:/config/DefaultColourMappings/
+
+secondary-button-background: {{{ [colour[primary]lightness[90]] }}}
+secondary-button-foreground: {{{ [colour[primary]lightness[35]] }}}
+secondary-button-border: {{{ [colour[primary]lightness[60]] }}}
+fab-background: {{{ [colour[page-background]deviate[]] }}}
+fab-background-hover: {{{ [colour[primary]lightness[70]] }}}
+fab-foreground: {{{ [colour[primary]lightness[68]] }}}
+on-primary: {{{ [colour[primary]autocontrast[]] }}}
