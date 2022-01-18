@@ -104,7 +104,7 @@ div.tc-tab-content div.tc-file-input-wrapper {
     position: fixed;
     top: 0;
     min-height: calc(5px + <<voffset>>);
-    maxn-height: calc(5px + <<voffset>>);
+    max-height: calc(5px + <<voffset>>);
 }
 
 .cv-topbar-wrapper {
@@ -552,7 +552,10 @@ cv-sidebar .tc-more-sidebar {
 	}
 
 	.tc-story-river {
-		bottom: 50px;
+        top: 0px;
+        bottom: 50px;
+        padding: 0px;
+        margin-top: <<voffset>>;
 	}
 }
 
