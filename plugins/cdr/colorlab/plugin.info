@@ -2,7 +2,7 @@
 	"title": "$:/plugins/cdr/colorlab",
 	"name": "Color Library",
 	"description": "Color manipulation library",
-	"author": "cdr",
+	"author": "cdruan",
 	"list": "",
 	"version": "0.1"
 }
