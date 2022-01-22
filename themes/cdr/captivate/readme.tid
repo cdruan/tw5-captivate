@@ -1,19 +1,24 @@
 title: $:/themes/cdr/captivate/readme
 
-A clean, functional theme for [[TiddlyWiki|https://tiddlywiki.com]].
+This theme has a left sidebar layout for <$text text="TiddlyWiki"/>.
 
 !! Features
 
-* Quick and easy personalization of your wiki's colors
-* Dual layouts&mdash;captivate themed and ~TiddlyWiki's default layouts
-* Graceful fallback of display-p3 palette entries in non-supporting browsers 
+* Personalize the colors of your wiki with just a few clicks.
+* Switch between Captivate and the default <$text text="TiddlyWiki"/> layout.
+* Use [[display-p3|https://webkit.org/blog/10042/wide-gamut-color-in-css-with-display-p3/]] colors in your palettes. The theme will gracefully fall back to sRGB for browsers that do not support this color space.
 
 !! Installation
 
-To add this theme to your own ~TiddlyWiki
+To add this theme to your own <$text text="TiddlyWiki"/>
 
 # Drag the following links to your wiki:
 #* [[$:/themes/cdr/captivate]]
 #* [[$:/plugins/cdr/colorlab]]
 # Save and reload
-# Select ''Captivate'' theme in [[$:/ControlPanel]] > Appearance > Theme
+# Select the ''Captivate'' theme in ''[[$:/ControlPanel]] > Appearance > Theme''
+
+!! Usage
+
+* To generate personal color palettes, go to ''[[$:/ControlPanel]] > Appearance > Theme Tweaks''
+* To switch the page layout, use the keyboard shortcut <kbd><<displayshortcuts ((layout-switcher))>></kbd>

@@ -1,13 +1,12 @@
-created: 20210701212256020
-modified: 20210729074304455
-tags: 
-title: Welcome
+title: Captivate Theme Demo
 type: text/vnd.tiddlywiki
 
-! Design Your Own Color Palette
+!! Design Your Own Color Palette
 
 {{$:/themes/cdr/captivate/tweaks/colors}}
 
 ---
 
-&#42; Press <kbd><<displayshortcuts ((layout-switcher))>></kbd> to switch page layout.
+&#42; For details about the theme, see [[README|$:/themes/cdr/captivate/readme]]
+
+&#42; Press <kbd><<displayshortcuts ((layout-switcher))>></kbd> to switch between page layouts.

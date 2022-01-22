@@ -8,149 +8,149 @@ title: $:/themes/cdr/captivate/css/base-layout
 \define fabxy() 4px
 
 .tc-dropzone > p {
-    margin: 0px;
+	margin: 0px;
 }
 
 /* TABS */
 
 .tc-tab-set .tc-tab-buttons:not(.tc-vertical) {
-    margin-bottom: 0px;
+	margin-bottom: 0px;
 }
 
 .tc-tab-set .tc-tab-buttons:not(.tc-vertical) button {
-    margin: 2px 7px 0px 0px;
-    padding: 3px 5px;
+	margin: 2px 7px 0px 0px;
+	padding: 3px 5px;
 	border: none;
 }
 
 .tc-tab-set > .tc-tab-buttons:not(.tc-vertical) button.tc-tab-selected {
-    border-bottom: 2px solid <<colour tab-border-selected>>;
+	border-bottom: 2px solid <<colour tab-border-selected>>;
 }
 
 .tc-tab-set > .tc-tab-buttons.tc-vertical {
-    padding-top: 0;
-    margin-right: -1px;
+	padding-top: 0;
+	margin-right: -1px;
 }
 
 .tc-tab-set > .tc-tab-buttons.tc-vertical > button {
-    margin-top: 3px;
-    margin-bottom: 3px;
+	margin-top: 3px;
+	margin-bottom: 3px;
 }
 
 .tc-tab-set > .tc-tab-buttons.tc-vertical > button {
-    border-right: 1px solid transparent;
-    text-align: left;
+	border-right: 1px solid transparent;
+	text-align: left;
 }
 
 .tc-tab-set > .tc-tab-buttons.tc-vertical > button.tc-tab-selected {
-    /*
-    border-top: 1px solid <<colour tab-border-selected>>;
-    border-bottom: 1px solid <<colour tab-border-selected>>;
-    border-left: 1px solid <<colour tab-border-selected>>;
-    border-right: 1px solid <<colour tab-background-selected>>;
-    */
-    border-top: none;
-    border-bottom: none;
-    border-left: none;
-    border-right: 3px solid <<colour tab-border-selected>>;
+	/*
+	border-top: 1px solid <<colour tab-border-selected>>;
+	border-bottom: 1px solid <<colour tab-border-selected>>;
+	border-left: 1px solid <<colour tab-border-selected>>;
+	border-right: 1px solid <<colour tab-background-selected>>;
+	*/
+	border-top: none;
+	border-bottom: none;
+	border-left: none;
+	border-right: 3px solid <<colour tab-border-selected>>;
 }
 
 .tc-tab-content.tc-vertical {
-    margin-top: 0;
-    margin-left: 1px;
-    border-left: 1px solid <<colour tab-divider>>;
+	margin-top: 0;
+	margin-left: 1px;
+	border-left: 1px solid <<colour tab-divider>>;
 }
 
 .tc-tab-content .tc-search-results {
-    overflow-y: auto;
-    height: 50vh;
+	overflow-y: auto;
+	height: 50vh;
 }
 
 div.tc-tab-content div.tc-file-input-wrapper {
-    margin-bottom: 0px;
+	margin-bottom: 0px;
 }
 
 .tc-tab-content.tc-sidebar-tabs-more .tc-tag-list-item {
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
+	display: flex;
+	align-items: center;
+	margin-top: 5px;
 }
 
 /* VANILLA TWEAKS */
 
 .tc-story-river {
-    padding: 0px;
-    padding-top: <<voffset>>;
+	padding: 0px;
+	padding-top: <<voffset>>;
 }
 
 .tc-modal-wrapper { z-index: 1000; }
 
 .tc-modal-backdrop { 
-    overflow: hidden; 
+	overflow: hidden; 
 }
 
 .tc-plugin-info-dropdown,
 .tc-plugin-info {
-    border: 1px solid <<colour table-border>>; 
+	border: 1px solid <<colour table-border>>; 
 }
 
 .tc-plugin-reload-warning { 
-    z-index: 2000; 
+	z-index: 2000; 
 }
 
 /* TOPBAR */
 
 .tc-adjust-top-of-scroll {
-    position: fixed;
-    top: 0;
-    min-height: calc(5px + <<voffset>>);
-    max-height: calc(5px + <<voffset>>);
+	position: fixed;
+	top: 0;
+	min-height: calc(5px + <<voffset>>);
+	max-height: calc(5px + <<voffset>>);
 }
 
 .cv-topbar-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: <<voffset>>;
-    z-index: 1000;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: <<voffset>>;
+	z-index: 1000;
+	display: flex;
+	flex-flow: row nowrap;
+	align-items: center;
 }
 
 .cv-topbar-wrapper .cv-topbar-btn,
 .cv-sidebar-header .cv-topbar-btn {
-    margin: 0px 12px;
+	margin: 0px 12px;
 }
 
 .cv-topbar-wrapper .cv-topbar-main {
-    display: flex;
-    width: 100%;
-    align-items: center;
+	display: flex;
+	width: 100%;
+	align-items: center;
 }
 
 .cv-topbar-wrapper .cv-topbar-title,
 .cv-sidebar .cv-topbar-title {
-    flex-grow: 1;
+	flex-grow: 1;
 	flex-basis: 0;
 }
 
 .cv-topbar-main > .tc-page-controls {
-    flex-basis: max-content;
-    flex-shrink: 0;
-    margin: 0px;
+	flex-basis: max-content;
+	flex-shrink: 0;
+	margin: 0px;
 }
 
 .cv-topbar-wrapper .tc-page-controls > .tc-popup {
-    left: unset !important;
-    right: 10px;
+	left: unset !important;
+	right: 10px;
 }
 
 @media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
-    .cv-topbar-wrapper .tc-page-controls {
-        display: none;
-    }
+	.cv-topbar-wrapper .tc-page-controls {
+		display: none;
+	}
 }
 
 @media (max-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
@@ -165,64 +165,64 @@ div.tc-tab-content div.tc-file-input-wrapper {
 /* SEARCHBAR */
 
 .cv-search-bar { 
-    display: flex;
-    margin: 0px 12px;
+	display: flex;
+	margin: 0px 12px;
 }
 
 .cv-search-bar input {
-    border: 0;
-    padding: 2px 6px; 
-    margin: 0px 10px;
+	border: 0;
+	padding: 2px 6px; 
+	margin: 0px 10px;
 }
 
 .cv-search-bar input:focus {
-    width:25em;
+	width:25em;
 }
 
 div.cv-search-dropdown {
-    position: fixed;
-    top: <<voffset>>;
-    right: 10px;
-    min-width: 450px;
-    max-width: 450px;
-    max-height: 80vh;
-    margin: 0px;
-    padding: 0px;
-    border: none;
-    overflow-y: hidden;
+	position: fixed;
+	top: <<voffset>>;
+	right: 10px;
+	min-width: 450px;
+	max-width: 450px;
+	max-height: 80vh;
+	margin: 0px;
+	padding: 0px;
+	border: none;
+	overflow-y: hidden;
 }
 
 .cv-search-dropdown > .tc-tab-set > .tc-tab-buttons {
-    display: flex;
-    padding: 0;
-    justify-content: space-around;
+	display: flex;
+	padding: 0;
+	justify-content: space-around;
 }
 
 .cv-search-dropdown > .tc-tab-set > .tc-tab-buttons > button {
-    flex-basis: 25%;
-    margin: 0px;
+	flex-basis: 25%;
+	margin: 0px;
 }
 
 .cv-search-dropdown .tc-tab-content,
 .cv-search-dropdown .tc-tab-content > div {
-    width: 100%;
+	width: 100%;
 }
 
 .cv-search-dropdown > .tc-tab-set > .tc-tab-content {
-    padding: 0 0px 3px 8px;
-    margin: 0;
+	padding: 0 0px 3px 8px;
+	margin: 0;
 }
 
 .cv-search-dropdown .tc-tab-content .tc-search {
-    display: none !important; 
+	display: none !important; 
 }
 
 .cv-search-dropdown .tc-tab-content .tc-search-results {
-    padding: 0px;
+	padding: 0px;
 }
 
 .tc-search-drop-down a {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 /* BOTTOMBAR */
@@ -234,41 +234,41 @@ div.cv-search-dropdown {
 }
 
 .cv-bottombar-wrapper {
-    position: fixed;
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    z-index: 1000;
-    padding-top: 0.5rem;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+	position: fixed;
+	width: 100%;
+	left: 0;
+	bottom: 0;
+	z-index: 1000;
+	padding-top: 0.5rem;
+	padding-bottom: calc(12px + env(safe-area-inset-bottom));
 	padding-left: 16px;
 	padding-right: 16px;
 }
 
 .cv-bottombar-wrapper .tc-page-controls {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    height: 30px;
-    margin: 0px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-items: center;
+	height: 30px;
+	margin: 0px;
 	overflow: auto;
 }
 
 .cv-bottombar-wrapper .tc-page-controls button {
-    margin-right: 0px;
+	margin-right: 0px;
 }
 
 /* SIDEBAR */
 
 div.cv-sidebar {
-    position: fixed; /* absolute works */
-    left: 0;
-    top: <<voffset>>;
-    bottom: 0;
-    z-index: 1000;
-    overflow-x: hidden;
-    overflow-y: hidden;
+	position: fixed; /* absolute works */
+	left: 0;
+	top: <<voffset>>;
+	bottom: 0;
+	z-index: 1000;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 
 @media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
@@ -278,109 +278,109 @@ div.cv-sidebar {
 }
 
 .cv-sidebar *::-webkit-scrollbar {
-    height: 6px;
-    width: 6px;
+	height: 6px;
+	width: 6px;
 }
 
 .cv-sidebar > .tc-sidebar-tabs {
-    height: calc(100vh - <<voffset>>);
+	height: calc(100vh - <<voffset>>);
 	height: calc(-webkit-fill-available - <<voffset>>);
 }
 
 .cv-sidebar .tc-tab-set.tc-sidebar-tabs-main {
-    height: 100%;
-    display: flex;
-    flex-flow: column;
+	height: 100%;
+	display: flex;
+	flex-flow: column;
 }
 
 .cv-sidebar .tc-tab-set.tc-sidebar-tabs-main > .tc-tab-content {
-    flex-grow: 1;
-    height: calc(100vh - <<voffset>> - 28px);
+	flex-grow: 1;
+	height: calc(100vh - <<voffset>> - 28px);
 	height: calc(-webkit-fill-available - <<voffset>> - 28px);
-    padding: 15px 5px 15px 12px;
+	padding: 15px 5px 15px 12px;
 	margin: 0px;
 	scrollbar-width: none;
-    overflow-y: scroll;
+	overflow-y: scroll;
 	-webkit-overflow-scrolling: touch;	
 }
 
 .cv-sidebar .tc-more-sidebar {
-    height: calc(100vh - <<voffset>> - 28px - 30px);
+	height: calc(100vh - <<voffset>> - 28px - 30px);
 	height: calc(-webkit-fill-available - <<voffset>> - 28px - 30px);
 	/*
-    scrollbar-width: none;
-    overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+	scrollbar-width: none;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: touch;
 	*/
 }
 
 div.tc-more-sidebar > .tc-tab-set,
 div.tc-more-sidebar > .tc-tab-set > .tc-tab-content {
-    height: 100%;
-    -webkit-overflow-scrolling: touch;
+	height: 100%;
+	-webkit-overflow-scrolling: touch;
 }
 
 .tc-sidebar-tabs-main.tc-tab-content ul {
-    padding-left: 16px;
-    margin: 0;
+	padding-left: 16px;
+	margin: 0;
 }
 
 .tc-sidebar-tabs-main.tc-tab-content p {
-    margin-top: 0px;
-    margin-bottom: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 
 .cv-sidebar .tc-sidebar-tabs > p:first-child {
-    margin: 0px;
+	margin: 0px;
 }
 
 .cv-sidebar .tc-tab-buttons.tc-sidebar-tabs-main {
-    display: flex;
-    justify-content: space-around;
-    padding-top: 4px;
-    margin-left: 5px;
+	display: flex;
+	justify-content: space-around;
+	padding-top: 4px;
+	margin-left: 5px;
 }
 
 cv-sidebar .tc-more-sidebar { 
-    width: 100%; 
-    margin-left: -10px;
+	width: 100%; 
+	margin-left: -10px;
 }
 
 .tc-sidebar-tabs-main div[class*="tc-btn-"] {
-    margin-bottom: 6px;
+	margin-bottom: 6px;
 }
 
 .tc-sidebar-tabs-main div[class*="tc-btn-"] button {
-    padding: 1px 10px;
+	padding: 1px 10px;
 }
 
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more > div > .tc-menu-list-item,
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more .tc-menu-list-item > .tc-menu-list-subitem {
-    overflow-x: hidden;
-    line-height: 1.2;
-    padding: 2px 0px 2px 2px;
+	overflow-x: hidden;
+	line-height: 1.2;
+	padding: 2px 0px 2px 2px;
 }
 
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more > div > .tc-menu-list-item:hover,
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more .tc-menu-list-item > .tc-menu-list-subitem:hover {
-    overflow-x: visible;
-    height: auto;
+	overflow-x: visible;
+	height: auto;
 }
 
 .cv-sidebar .tc-sidebar-tabs-more .tc-tab-set .tc-menu-list-item {
-    margin-bottom: 0.8em;
+	margin-bottom: 0.8em;
 }
 
 .cv-sidebar .tc-tab-content div[class^="tc-btn-"] button {
-    border: 1px solid <<colour secondary-button-border>>;
-    padding: 1px 10px;
-    min-height: 16px;
-    margin: 0px 1px 0px 5px;
+	border: 1px solid <<colour secondary-button-border>>;
+	padding: 1px 10px;
+	min-height: 16px;
+	margin: 0px 1px 0px 5px;
 }
 
 .cv-sidebar .tc-tab-content ol.tc-toc {
-    margin-top: 0px;
-    margin-bottom: 0px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 
 /* ACCENT TOPBAR: YES */
@@ -435,51 +435,51 @@ cv-sidebar .tc-more-sidebar {
 /* STORY RIVER */
 
 @media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
-    .tc-story-river {
-        width: unset;
-    }
+	.tc-story-river {
+		width: unset;
+	}
 
-    <$reveal type="nomatch" state="$:/state/sidebar" text="no" default={{{[subfilter{$:/themes/cdr/captivate/ui/SideBar/default}] }}} >
-        .tc-story-river { 
-            margin-left: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth}};
-            margin-right: unset;
-        }
+	<$reveal type="nomatch" state="$:/state/sidebar" text="no" default={{{[subfilter{$:/themes/cdr/captivate/ui/SideBar/default}] }}} >
+		.tc-story-river { 
+			margin-left: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth}};
+			margin-right: unset;
+		}
 
-        <$reveal type="match" state="$:/view" text="zoomin">
-            body.tc-body .tc-storyview-zoomin-tiddler {
-                width: calc(100% - 60px);
-            }
-        </$reveal>
-    </$reveal>
+		<$reveal type="match" state="$:/view" text="zoomin">
+			body.tc-body .tc-storyview-zoomin-tiddler {
+				width: calc(100% - 60px);
+			}
+		</$reveal>
+	</$reveal>
 
-    <$reveal type="match" state="$:/state/sidebar" text="no" default={{{[subfilter{$:/themes/cdr/captivate/ui/SideBar/default}] }}} >
-        .cv-topbar-wrapper .cv-topbar-title {
-            visibility: visible;
-        }
+	<$reveal type="match" state="$:/state/sidebar" text="no" default={{{[subfilter{$:/themes/cdr/captivate/ui/SideBar/default}] }}} >
+		.cv-topbar-wrapper .cv-topbar-title {
+			visibility: visible;
+		}
 
-        <$reveal type="match" state="$:/view" text="zoomin">
-            body.tc-body .tc-storyview-zoomin-tiddler {
-                width: calc(100% - 42px * 10);
-                left: calc(42px * 5);
-            }
-        </$reveal>
-    </$reveal>
+		<$reveal type="match" state="$:/view" text="zoomin">
+			body.tc-body .tc-storyview-zoomin-tiddler {
+				width: calc(100% - 42px * 10);
+				left: calc(42px * 5);
+			}
+		</$reveal>
+	</$reveal>
 
-    .tc-tiddler-frame {
-        width: {{$:/themes/cdr/captivate/settings/tiddlerwidth}};
-        margin-left: auto;
-        margin-right: auto;
-        padding: 24px 48px 36px;
-        border-radius: 4px;
-    }
+	.tc-tiddler-frame {
+		width: {{$:/themes/cdr/captivate/settings/tiddlerwidth}};
+		margin-left: auto;
+		margin-right: auto;
+		padding: 24px 48px 36px;
+		border-radius: 4px;
+	}
 }
 
 <$reveal type="match" state="$:/themes/tiddlywiki/vanilla/options/stickytitles" text="yes" default ="no">
-    .tc-tiddler-frame .tc-tiddler-title {
-        top: <<voffset>>;
-        padding: 3px 0px;
-        z-index: 700;
-    }
+	.tc-tiddler-frame .tc-tiddler-title {
+		top: <<voffset>>;
+		padding: 3px 0px;
+		z-index: 700;
+	}
 </$reveal>
 
 /* PORTRAIT */
@@ -552,10 +552,10 @@ cv-sidebar .tc-more-sidebar {
 	}
 
 	.tc-story-river {
-        top: 0px;
-        bottom: 50px;
-        padding: 0px;
-        margin-top: <<voffset>>;
+		top: 0px;
+		bottom: 50px;
+		padding: 0px;
+		margin-top: <<voffset>>;
 	}
 }
 
@@ -574,7 +574,7 @@ cv-sidebar .tc-more-sidebar {
 		height: <<fabsize>>;
 		width: <<fabsize>>;
 		padding: 0;
-        line-height: 1;
+		line-height: 1;
 		/* display: flex; */
 		/* align-items: center; */
 		/*justify-content: space-around;*/
