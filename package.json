@@ -1,0 +1,27 @@
+{
+  "name": "tw5-captivate",
+  "version": "1.0.0",
+  "description": "TiddlyWiki theme with easy color customization",
+  "dependencies": {
+    "tiddlywiki": "^5.1.23"
+  },
+  "scripts": {
+    "build": "TIDDLYWIKI_PLUGIN_PATH=plugins TIDDLYWIKI_THEME_PATH=themes node ./node_modules/tiddlywiki/tiddlywiki.js wiki --build index",
+    "start": "TIDDLYWIKI_PLUGIN_PATH=plugins TIDDLYWIKI_THEME_PATH=themes node ./node_modules/tiddlywiki/tiddlywiki.js wiki --build listen"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cdruan/tw5-captivate.git"
+  },
+  "keywords": [
+    "TW5",
+    "TW5-plugins",
+    "tiddlywiki"
+  ],
+  "author": "cdruan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cdruan/tw5-captivate/issues"
+  },
+  "homepage": "https://github.com/cdruan/tw5-captivate#readme"
+}
