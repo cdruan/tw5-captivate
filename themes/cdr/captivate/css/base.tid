@@ -23,13 +23,42 @@ pre, code {
 }
 
 h1,h2,h3,h4,h5,h6 { font-weight: 400; }
+
 h1 { font-size: 1.5em; }
 h2 { font-size: 1.32em; }
+
+.tc-tiddler-body h1, .tc-tiddler-body h2,
+.tc-tiddler-body h3, .tc-tiddler-body h4 {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.tc-tiddler-body h5, .tc-tiddler-body h6 {
+	margin-bottom: -0.5rem;
+}
+
+.tc-tiddler-body pre { 
+	margin-top: -0.3em;
+}
+
+.tc-tiddler-body li + li {
+  margin-top: 0.3em;
+}
 
 .tc-site-title,
 .tc-titlebar {
 	font-size: 26px;
+	line-height: 1.1;
+}
+
+.tc-title {
 	letter-spacing: -0.5px;
+	line-height: 1.1
+}
+
+.tc-tiddler-title-icon:empty,
+.tc-tiddler-view-frame .tc-subtitle .tc-tiddlylink-missing {
+	display: none;	
 }
 
 /* HTML TWEAKS */
@@ -577,6 +606,13 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 
 	.tc-tiddler-frame {
 		<<box-shadow "0px 2px 3px rgba(0, 0, 0, 0.5)">>
+	}
+}
+
+@supports (-webkit-touch-callout: none) {
+	/* CSS specific to iOS devices */
+	input, textarea {
+		font-size: 16px;   /* prevents automatic zoom-in with small fonts */
 	}
 }
 
