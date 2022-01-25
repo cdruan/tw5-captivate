@@ -4,7 +4,7 @@
     "author": "cdruan",
     "core-version": ">=5.1.23",
     "plugin-type": "theme",
-    "description": "Switchable layouts with custom color palettes",
+    "description": "Switchable layouts with custom palettes",
     "dependents": ["$:/themes/tiddlywiki/vanilla","$:/plugins/cdr/colorlab"],
     "list": ["contents", "readme"],
     "version": "0.1.0"
