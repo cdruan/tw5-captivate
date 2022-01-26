@@ -37,12 +37,8 @@ h2 { font-size: 1.32em; }
 	margin-bottom: -0.5rem;
 }
 
-.tc-tiddler-body pre { 
-	margin-top: -0.3em;
-}
-
 .tc-tiddler-body li + li {
-  margin-top: 0.3em;
+  margin-top: 0.25em;
 }
 
 .tc-site-title,
