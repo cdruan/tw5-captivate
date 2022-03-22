@@ -354,6 +354,11 @@ div.cv-sidebar {
 	line-height: 1.2;
 }
 
+.tc-sidebar-tabs-main .tc-menu-list-subitem {
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+}
+
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more > div > .tc-menu-list-item:hover,
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more .tc-menu-list-item > .tc-menu-list-subitem:hover {
 	white-space: normal;
