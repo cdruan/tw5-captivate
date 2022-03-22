@@ -12,7 +12,7 @@ blockquote-bar: #d0d0d0
 button-background:  <$macrocall $name="color-lightness" color={{$:/themes/cdr/captivate/settings/color-primary}} value="max(91)" />
 button-foreground: <<colour on-primary>>
 button-border: <<colour button-background>>
-code-background: #ececec
+code-background: #eff1f3
 code-border: transparent
 code-foreground: <<colour foreground>>
 dirty-indicator: #ff0000

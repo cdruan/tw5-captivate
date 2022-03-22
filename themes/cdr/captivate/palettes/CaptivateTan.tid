@@ -12,7 +12,7 @@ blockquote-bar: #d0d0d0
 button-background: {{{ [colour[primary]lightness[max(90)]] }}}
 button-foreground: <<colour on-primary>>
 button-border: <<colour button-background>>
-code-background: #ececec
+code-background: #eceef0
 code-border: transparent
 code-foreground: <<colour foreground>>
 dirty-indicator: #ff0000
