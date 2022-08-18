@@ -53,8 +53,8 @@ h2 { font-size: 1.32em; }
 }
 
 .tc-tiddler-title-icon:empty,
-.tc-tiddler-view-frame .tc-subtitle .tc-tiddlylink-missing {
-	display: none;	
+.tc-subtitle a.tc-tiddlylink-missing[href="#"] {
+	display: none;
 }
 
 /* HTML TWEAKS */
@@ -71,7 +71,7 @@ input:focus, textarea:focus,
 .tc-tiddler-frame textarea.tc-edit-texteditor:focus,
 .tc-tiddler-frame iframe.tc-edit-texteditor:focus {
 	box-shadow: 0 0 3px 0 <<colour selection-background>>;
-	border-color: <<colour selection-background>>; 
+	border-color: <<colour selection-background>>;
 	outline: 0;
 }
 
@@ -188,7 +188,7 @@ button.tc-secondary-btn:not(:disabled):hover {
 }
 
 .tc-drop-down a:hover, .tc-drop-down a.tc-tiddlylink:hover,
-.tc-drop-down button:hover, .tc-drop-down .tc-file-input-wrapper:hover button, 
+.tc-drop-down button:hover, .tc-drop-down .tc-file-input-wrapper:hover button,
 .tc-drop-down button.tc-btn-invisible:hover svg,
 .tc-chosen, .tc-chooser-item:hover {
 	color: <<colour selection-foreground>>;
@@ -395,7 +395,7 @@ div.cv-sidebar {
 		<<box-shadow "0 2px 5px -1px rgba(60,64,67,.26), 0 3px 5px 0px rgba(60,64,67,0.13)">>
 	}
 
-	.cv-topbar-wrapper .cv-topbar-title, 
+	.cv-topbar-wrapper .cv-topbar-title,
 	.cv-topbar-wrapper .cv-topbar-btn,
 	.cv-topbar-wrapper .cv-search-bar > .tc-btn-invisible,
 	.cv-topbar-wrapper .tc-page-controls > .tc-btn-invisible svg {
@@ -429,7 +429,7 @@ div.cv-sidebar {
 		background: <<colour page-background>>;
 	}
 
-	.cv-topbar-wrapper .cv-topbar-title, 
+	.cv-topbar-wrapper .cv-topbar-title,
 	.cv-topbar-wrapper .cv-topbar-btn,
 	.cv-topbar-wrapper .cv-search-bar > .tc-btn-invisible,
 	.cv-topbar-wrapper .tc-page-controls > button svg {
@@ -486,8 +486,8 @@ div[data-tags*="$:/tags/Stylesheet"] .tc-tiddler-body {
 	<<box-shadow "0 3px 7px rgba(0,0,0,0.3)">>
 }
 
-.tc-modal-footer { 
-	border-radius: 0 0 6px 6px; 
+.tc-modal-footer {
+	border-radius: 0 0 6px 6px;
 }
 
 /* SCROLLBARS */
@@ -509,7 +509,6 @@ div::-webkit-scrollbar-thumb {
 a.tc-tiddlylink,
 a.tc-tiddlylink:visited {
 	text-decoration:none;
-	/* font-weight: 400; */
 }
 
 .tc-sidebar-lists a.tc-tiddlylink:hover {
@@ -519,9 +518,32 @@ a.tc-tiddlylink:visited {
 /* external */
 a.tc-tiddlylink-external,
 a.tc-tiddlylink-external:visited {
-	text-decoration: underline;
-	text-underline-offset: 4px;
-	/* font-weight: 400; */
+	text-decoration: none;
+	font-weight: 500;
+}
+
+a.tc-tiddlylink:hover,
+a.tc-tiddlylink-external:hover {
+  text-decoration-line: underline;
+  text-underline-offset: 2px;
+}
+
+@media screen {
+  a.tc-tiddlylink-external::after {
+    content: "";
+    height: 10px;
+    width: 10px;
+    display: inline-block;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m 7.5,0.5 h 4 v 4 M 3.5,2 h -3 v 9.5 H 10 v -3 M 11.5,0.5 5,7' fill='none' stroke='%23000' stroke-linecap='round' stroke-width='1.25' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m 7.5,0.5 h 4 v 4 M 3.5,2 h -3 v 9.5 H 10 v -3 M 11.5,0.5 5,7' fill='none' stroke='%23000' stroke-linecap='round' stroke-width='1.25' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    background-color: currentcolor;
+    margin: 0 2px 0 3px;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    print-color-adjust: exact;
+  }
 }
 
 a.tc-tiddlylink.tc-plugin-info:hover {
@@ -620,5 +642,29 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 <$reveal type="match" state="$:/layout" text="$:/themes/cdr/captivate/ui/PageLayout">
 {{$:/themes/cdr/captivate/css/base-layout}}
 </$reveal>
+
+@media print {
+	.tc-tiddler-body a[href^=http]:after {
+		content:" <" attr(href) "> ";
+		font-size: 0.85em;
+	}
+	
+	.tc-plugin-info-dropdown-body {
+		background-color: unset;
+	}
+
+	html button, .tc-tag-label {
+		border: 1px buttontext solid;
+		background-color: unset;
+		color: buttontext;
+		fill: buttontext;
+	}
+
+	.tc-tab-buttons button.tc-tab-selected {
+		background-color: transparent;
+		color: buttontext;
+		fill: buttontext;
+	}
+}
 
 </pre>
