@@ -4,8 +4,6 @@ list-after: $:/themes/tiddlywiki/vanilla/base
 
 \define dur() 300ms
 
-<pre>
-
 /* FONTS */
 
 h1,h2,h3,h4,h5,h6 { font-weight: 400; }
@@ -102,6 +100,10 @@ button {
 	padding: 3px 8px;
 	cursor: pointer;
 	transition: box-shadow ease-in .1s;
+}
+
+details > summary {
+	cursor: pointer;
 }
 
 .tc-sidebar-tab-open .tc-btn-invisible.tc-btn-mini svg {
@@ -630,7 +632,7 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 		content:" <" attr(href) "> ";
 		font-size: 0.85em;
 	}
-	
+
 	.tc-plugin-info-dropdown-body {
 		background-color: unset;
 	}
@@ -649,4 +651,3 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 	}
 }
 
-</pre>
