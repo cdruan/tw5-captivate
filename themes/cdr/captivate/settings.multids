@@ -1,8 +1,5 @@
 title: $:/themes/cdr/captivate/
 
-settings/fontfamily: system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji"
-settings/codefontfamily: ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,"Liberation Mono",monospace
-settings/editorfontfamily: ui-monospace,"SFMono-Regular","SF Mono",Menlo,Consolas,"Liberation Mono",monospace
 settings/accent-topbar: yes
 settings/color-primary: #01579B
 settings/color-secondary: #0190fe
