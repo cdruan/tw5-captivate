@@ -96,9 +96,9 @@ var NumberUnit = new RegExp("^"+Numeric+"([a-z%]*)$");
 
 /*
  * Arguments to color functions may be separated by either spaces or commas.
- * Alpha channel specified after " / " takes precedence over alpha component in 
+ * Alpha channel specified after " / " takes precedence over alpha component in
  * a color tuple.
- * 
+ *
  * Returns either:
  * 1) an rgb array with components in [0..255], or
  * 2) an object with space, coords, and alpha properties, or
@@ -142,21 +142,25 @@ module.exports = function parseColorString(str) {
 		}
 		var alphaStr = coords[i+1];
 		coords.splice(i);
-		alpha = parseNumberOrPercent(alphaStr) || 0; // take care of NaN
+		alpha = parseNumberOrPercent(alphaStr);
 	} else if (coords.length > 3) {
-		alpha = parseNumberOrPercent(coords[3]) || 0;
+		alpha = parseNumberOrPercent(coords[3]);
+	}
+
+	if (alpha === undefined) {
+		return null;
 	}
 
 	// per css4 color() spec:
-	// If more <number>s or <percentage>s are provided than parameters that the 
+	// If more <number>s or <percentage>s are provided than parameters that the
 	// color space takes, the excess <number>s at the end are ignored.
-	// If fewer <number>s or <percentage>s are provided than parameters that the 
-	// color space takes, the missing parameters default to 0. 
+	// If fewer <number>s or <percentage>s are provided than parameters that the
+	// color space takes, the missing parameters default to 0.
 	coords.splice(3);
 	if (coords.length < 3) {
 		if (! isColorFn) {
 			return null;
-		} 
+		}
 		// pad missing entries with 0
 		for (var i = 3 - coords.length; i > 0; i--) {
 			coords.push("0");
@@ -168,11 +172,11 @@ module.exports = function parseColorString(str) {
 		case "rgb":
 		case "rgba":
 			space = "rgb";
-			coords = parseCoordsRGB(coords,255);	
+			coords = parseCoordsRGB(coords,255);
 			break;
 		case "hsl":
 		case "hsla":
-			space = "rgb";
+			space = "hsl";
 			coords = parseCoordsHSL(coords);
 			break;
 		case "display-p3":
@@ -200,9 +204,11 @@ module.exports = function parseColorString(str) {
 // convert percentage to float; if str is a number and scale is provided, return
 // the number divided by the scale.
 function parseNumberOrPercent(str,scale) {
+	if (str === "none") return NaN;
+
 	var m = str.match(NumberUnit);
 	if (!m) {
-		return NaN;
+		return undefined;
 	}
 	if (m[2] === "%") {
 		return parseFloat(m[1]/100);
@@ -215,9 +221,11 @@ function parseNumberOrPercent(str,scale) {
 }
 
 function parseNumber(str) {
+	if (str === "none") return NaN;
+
 	var m = str.match(NumberUnit);
 	if (!m || m[2] !== "") {
-		return NaN;
+		return undefined;
 	}
 
 	return parseFloat(m[1]);
@@ -225,12 +233,14 @@ function parseNumber(str) {
 
 // returns hue in degrees
 function parseHue(str) {
+	if (str === "none") return NaN;
+
 	var m = str.match(NumberUnit);
 	if (!m) {
-		return NaN;
+		return undefined;
 	}
 	var n = parseFloat(m[1]);
-	
+
 	switch(m[2]) {
 	case "":
 	case "deg":
@@ -245,24 +255,28 @@ function parseHue(str) {
 		n = n * 360;
 		break;
 	default:
-		return NaN;
+		return undefined;
 	}
 	return n;
 }
 
 function parsePercent(str) {
+	if (str === "none") return NaN;
+
 	var m = str.match(NumberUnit);
 	if (!m || m[2] !== "%") {
-		return NaN;
+		return undefined;
 	}
 	return parseFloat(m[1])/100;
 }
 
 // assumes the first character is "#"
 function parseHex(str) {
+	if (str === "none") return NaN;
+
 	// #RGB[A] and #RRGGBB[AA] syntax.
 	if (isNaN("0x"+str.slice(1))) {
-		return null;
+		return undefined;
 	}
 	if (str.length === 4 || str.length === 5) {
 		var iv = parseInt((str+"f").slice(1,5),16);
@@ -278,15 +292,14 @@ function parseHex(str) {
 				(iv & 0xff) / 255];
 	}
 
-	return null;
+	return undefined;
 }
 
-// Numbers are interpreted from [0..scale] or [0..1] by default. 
-// Returns RGB components in [0..1].
+// Numbers are interpreted from [0..scale] or [0..1] by default.
 function parseCoordsRGB(coords,scale) {
 	for (var i = 0; i < 3; i++) {
 		coords[i] = parseNumberOrPercent(coords[i],scale);
-		if (isNaN(coords[i])) {
+		if (coords[i] === undefined) {
 			return null;
 		}
 	}
@@ -296,44 +309,31 @@ function parseCoordsRGB(coords,scale) {
 // Adapted from https://www.w3.org/TR/css-color-4/#hsl-to-rgb
 // Returns RGB components in [0..1]
 function parseCoordsHSL(coords) {
-	var h = parseHue(coords[0]);
-	var s = parsePercent(coords[1]);
-	var l = parsePercent(coords[2]);
+	var hsl = [
+		parseHue(coords[0]),
+		parsePercent(coords[1]),
+		parsePercent(coords[2])
+	];
 
-	if (isNaN(h) || isNaN(s) || isNaN(l)) {
+	if (hsl.includes(undefined)) {
 		return null;
 	}
 
-	var hue2rgb = function(t1,t2,hue) {
-		if(hue < 0) hue += 6;
-		if(hue >= 6) hue -= 6;
-	  
-		if(hue < 1) return (t2 - t1) * hue + t1;
-		else if(hue < 3) return t2;
-		else if(hue < 4) return (t2 - t1) * (4 - hue) + t1;
-		else return t1;
-    }
-
-	h = (((h % 360) + 360) % 360) / 60;
-
-	if(l <= .5) {
-		var t2 = l * (s + 1);
-	} else {
-		var t2 = l + s - (l * s);
-	}
-	var t1 = l * 2 - t2;
-	var r = hue2rgb(t1,t2,h + 2);
-	var g = hue2rgb(t1,t2,h);
-	var b = hue2rgb(t1,t2,h - 2);
-	return [r,g,b];
+	return hsl;
 }
 
 function parseCoordsLab(coords) {
-	var L = parsePercent(coords[0]) * 100,
-	    a = parseNumber(coords[1]),
-		b = parseNumber(coords[2]);
+	var lab = [
+		parsePercent(coords[0]) * 100,
+		parseNumber(coords[1]),
+		parseNumber(coords[2])
+	];
 
-	return [L,a,b];
+	if (lab.includes(undefined)) {
+		return null;
+	}
+
+	return lab;
 }
 
 })();

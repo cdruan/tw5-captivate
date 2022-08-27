@@ -26,14 +26,14 @@ function clone(obj) {
 }
 
 /*
-Create a Color object. If unable to process the input, rgba(0,0,0,0) is 
+Create a Color object. If unable to process the input, rgba(0,0,0,0) is
 created.
- 
+
 Valid inputs are:
 - CSS color string
 - object: {space, coords, alpha}
 - array with [0..255] rgb values and optional alpha in [0..1]
-- multiple arguments: space, coords, [alpha] 
+- multiple arguments: space, coords, [alpha]
 */
 function Color(color,optCoords,optAlpha) {
 	// If we are called as a function, call using new instead
@@ -105,19 +105,40 @@ function setupInternal(space,coords,alpha) {
 	}
 }
 
-/*
-Convert to color space and return a new color
+/**
+ * If value is given (will be clipped between [0..100]), sets the lightness
+ * level to the specified value. Otherwise, returns current lightness level.
+ */
+ Object.defineProperty(Color.prototype,'lightness',{
+	get: function() {
+		return (this.lch)[0];
+	},
+	set: function(value) {
+		var lch = this.lch;
+		var lightness = lch[0];
+
+		value = Convert.clamp(value,0,100);
+		// When a color has high lightness, it's chroma is typically clipped
+		// to fit in rgb, so decreasing L tends to introduce black shade;
+		// try to compensate by increasing chroma first
+		if (value < lightness && lightness >= 80 && lch[1] > 0.5) {
+			//var adjust = 100 - 0.04 * Math.pow(50-value, 2);
+			lch[1] += Math.max(20 - 0.008 * Math.pow(50-value,2),2);
+		}
+		lch[0] = value;
+		this.lch = lch;
+	}
+})
+
+/**
+ * Convert to color space and return a new color
 */
 Color.prototype.to = function(spaceId) {
-	var space = Convert.getSpace(spaceId);
-	var new_coords = this[spaceId];
-	var color = new Color({
+	return new Color({
 		space: spaceId,
-		coords: new_coords,
+		coords: this[spaceId],
 		alpha: this.alpha
 	});
-
-	return color;
 }
 
 Color.prototype.toString = function(space) {
@@ -136,24 +157,7 @@ Color.prototype.toString = function(space) {
 	return Convert.spaces[space].toString(tuple,this.alpha);
 };
 
-/* 
-If value is given (will be clipped between [0..100]), sets the lightness
-level to the specified value. Otherwise, returns current lightness level 
-MULTIPLIED by its alpha.
- */
-Color.prototype.lightness = function(value) {
-	var lch = this.lch;
-
-	if (value !== void(0) && !isNaN(value)) {
-		lch[0] = Convert.clamp(value,0,100);
-		this.lch = lch;
-		return this;
-	} 
-
-	return lch[0] * this.alpha;
-}
-
-Color.prototype.mix = function(colorB,weight) {
+Color.prototype.mixSRLAB2 = function(colorB,weight) {
 	if (!(colorB instanceof Color)) {
 		throw new TypeError('Input must be of type Color.');
 	}
@@ -180,9 +184,71 @@ Color.prototype.mix = function(colorB,weight) {
 		l = l / alpha;
 		a = a / alpha;
 		b = b / alpha;
-	} 
-	
+	}
+
 	return (new Color({space: "srlab2",coords:[l,a,b],alpha:alpha})).to(this.space);
+}
+
+Color.prototype.mixXYZ = function(colorB,weight) {
+	if (!(colorB instanceof Color)) {
+		throw new TypeError('Input must be of type Color.');
+	}
+
+	var colorA = this;
+	var xyzA = colorA.xyz;
+	var xyzB = colorB.xyz;
+
+	if(colorA.alpha < 1) {
+		premultiply("xyz",xyzA,colorA.alpha);
+	}
+	if(colorB.alpha < 1) {
+		premultiply("xyz",xyzB,colorB.alpha);
+	}
+
+	weight = Convert.clamp(weight,0,1);
+
+	var x = xyzA[0] + weight * (xyzB[0] - xyzA[0]);
+	var y = xyzA[1] + weight * (xyzB[1] - xyzA[1]);
+	var z = xyzA[2] + weight * (xyzB[2] - xyzA[2]);
+
+	var alpha = colorA.alpha + weight * (colorB.alpha - colorA.alpha);
+	if (alpha !== 0) {
+		x = x / alpha;
+		y = y / alpha;
+		z = z / alpha;
+	}
+
+	return (new Color({space: "xyz",coords:[x,y,z],alpha:alpha})).to(this.space);
+}
+
+Color.prototype.mix = Color.prototype.mixSRLAB2;
+
+// returns alpha composite color (this over colorB) using the "source over" operator
+Color.prototype.over = function(colorB) {
+	if (!(colorB instanceof Color)) {
+		throw new TypeError('Input must be of type Color.');
+	}
+
+	if(this.alpha === 1) {
+		return (new Color(this));
+	}
+	if(this.alpha === 0) {
+		return (new Color(colorB));
+	}
+	var rgbA = this.rgb, rgbB = colorB.rgb;
+
+	premultiply("rgb",rgbA,this.alpha);
+	premultiply("rgb",rgbB,colorB.alpha);
+
+	var r = rgbA[0] + rgbB[0] * (1 - this.alpha),
+		g = rgbA[1] + rgbB[1] * (1 - this.alpha),
+		b = rgbA[2] + rgbB[2] * (1 - this.alpha),
+		alpha = this.alpha + colorB.alpha * (1 - this.alpha);
+
+	r /= alpha;
+	g /= alpha;
+	b /= alpha;
+	return (new Color({space:"rgb",coords:[r,g,b],alpha:alpha}));
 }
 
 // returns the relative luminance of the color--"Y" component of the xyz space
@@ -239,7 +305,7 @@ function convert(fromSpaceID,coords,toSpaceID) {
 	if (!Convert.isInSpace(toSpace,temp) && toSpace.intoGamut) {
 		temp = forceIntoGamut(fromSpace,coords,toSpace)
 	}
-	return temp;    
+	return temp;
 }
 
 function forceIntoGamut(fromSpace,coords,toSpace) {
@@ -314,9 +380,9 @@ function deltaE(lab1,lab2,konst) {
 	}
 
 	var dH = 2 * Math.sqrt(C1 * C2) * Math.sin(dh/2 * d2r),
-		T = 1 
-			- 0.17 * Math.cos((Havg - 30)     * d2r) 
-			+ 0.24 * Math.cos((2 * Havg)      * d2r) 
+		T = 1
+			- 0.17 * Math.cos((Havg - 30)     * d2r)
+			+ 0.24 * Math.cos((2 * Havg)      * d2r)
 			+ 0.32 * Math.cos((3 * Havg + 6)  * d2r)
 			- 0.20 * Math.cos((4 * Havg - 63) * d2r),
 		Cavg7 = Math.pow(Cavg,7),
@@ -327,7 +393,7 @@ function deltaE(lab1,lab2,konst) {
 		SH = 1 + 0.015 * Cavg * T,
 		RT = - Math.sin(60 * Math.exp(-Math.pow((Havg - 275)/25,2))*d2r) * RC;
 
-		var dE = Math.sqrt(Math.pow(dL/(kL * SL),2) 
+		var dE = Math.sqrt(Math.pow(dL/(kL * SL),2)
 				+ Math.pow(dC/(kC * SC),2)
 				+ Math.pow(dH/(kH * SH),2)
 				+ RT * dC * dH / (kC * SC * kH * SH));

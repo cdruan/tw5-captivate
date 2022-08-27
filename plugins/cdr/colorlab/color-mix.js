@@ -30,8 +30,8 @@ var utils = require("$:/plugins/cdr/colorlab/twutils.js");
  * @returns {Color} The blended color
  */
 exports.run = function(color1,color2,weight) {
-	color1 = new Color(utils.wikifyText(color1,this.parentWidget));
-	color2 = new Color(utils.wikifyText(color2,this.parentWidget));
+	color1 = new Color(utils.wikifyText(color1,this));
+	color2 = new Color(utils.wikifyText(color2,this));
 
 	if (weight === void(0) || isNaN(weight)) {
 		weight = 0.5;
@@ -39,7 +39,7 @@ exports.run = function(color1,color2,weight) {
 		weight = isNaN(weight) ? 0.5 : parseFloat(weight);
 	}
 
-	return color1.mix(color2,weight).toString('rgb'); 
+	return color1.mix(color2,weight).toString();
 };
 
 })();

@@ -23,7 +23,7 @@ var Color = require("$:/plugins/cdr/colorlab/lib/color.js");
 var utils = require("$:/plugins/cdr/colorlab/twutils.js");
 
 exports.run = function(color,value) {
-	color = new Color(utils.wikifyText(color,this.parentWidget));
+	color = new Color(utils.wikifyText(color,this));
 
 	if (value === void(0) || value.trim() === "") {
 		return color.alpha.toString();
@@ -32,8 +32,7 @@ exports.run = function(color,value) {
 	var num = isNaN(value) ? 0 : parseFloat(value);
 
 	color.alpha = num;
-	return color.toString('rgb');
+	return color.toString();
 };
 
 })();
-	

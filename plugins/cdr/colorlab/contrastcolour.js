@@ -25,10 +25,10 @@ exports.params = [
 ];
 
 exports.run = function(target,fallbackTarget,colourA,colourB) {
-	var colTarget = new Color(utils.wikifyText(target,this.parentWidget) || utils.wikifyText(fallbackTarget,this.parentWidget));
+	var colTarget = new Color(utils.wikifyText(target,this) || utils.wikifyText(fallbackTarget,this));
 
-	var colA = new Color(utils.wikifyText(colourA,this.parentWidget));
-	var colB = new Color(utils.wikifyText(colourB,this.parentWidget));
+	var colA = new Color(utils.wikifyText(colourA,this));
+	var colB = new Color(utils.wikifyText(colourB,this));
 
 	if (colTarget.alpha === 0) {
 		return colA.toString();
@@ -37,23 +37,23 @@ exports.run = function(target,fallbackTarget,colourA,colourB) {
 	var contrastA = colTarget.contrast(colA),
 	    contrastB = colTarget.contrast(colB);
 
-	var lightnessTarget = colTarget.lightness();
+	var lightnessTarget = colTarget.lightness;
+	var minContrast = 3.1;
 
-	if (lightnessTarget <= utils.autocontrast) {
-		var lightnessA = colA.lightness(),
-		    lightnessB = colB.lightness();
+	// if target is dark enough, prefer light contrast, even if contrast ratio is insufficient
+	if (lightnessTarget <= utils.MaxContrastWhite) {
+		var lightnessA = colA.lightness,
+		    lightnessB = colB.lightness;
 
 		if (lightnessA >= lightnessB) {
-			if (contrastA >= 2.35) {
-				return colA.toString();
-			}
-		} else {
-			if (contrastB >= 2.35) {
-				return colB.toString();
-			}
+			return (contrastA >= minContrast ? colA.toString() : "#ffffff");
 		}
+		return (contrastB >= minContrast ? colB.toString() : "#ffffff");
 	}
 
+	if (contrastA < minContrast && contrastB < minContrast) {
+		return "#000000";
+	}
 	return (contrastA >= contrastB ? colA.toString() : colB.toString());
 };
 

@@ -23,7 +23,7 @@ var Color = require("$:/plugins/cdr/colorlab/lib/color.js");
 var utils = require("$:/plugins/cdr/colorlab/twutils.js");
 
 exports.run = function(color) {
-	var cssColor = utils.wikifyText(color,this.parentWidget);
+	var cssColor = utils.wikifyText(color,this);
 	color = Color.parse(cssColor);
 	if (! color) {
 		return "";

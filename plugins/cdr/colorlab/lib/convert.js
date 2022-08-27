@@ -5,6 +5,8 @@ module-type: library
 
 Color manipulation library
 
+Color componnent 'none' will be interpreted as NaN and in most cases, behaves as a zero value.
+See https://www.w3.org/TR/css-color-4/#missing for more details.
 \*/
 (function() {
 /*jslint node: true, browser: true */
@@ -67,12 +69,11 @@ Convert.spaces.xyz = {
 	fromXYZ: function(xyz) {return xyz;},
 	toXYZ:   function(xyz) {return xyz;},
 
-	toString: function(xyz,alpha) {
-		return "xyz(" + numstr(lch[0])
-			+ numstr(xyz[1]) + " " 
-			+ numstr(xyz[2])+ appendAlpha(alpha) + ")";
+	toString: function(coords,alpha) {
+		coords = coords.map(function(c) {return numstr(c);});
+		return "xyz(" + coords.join(" ") + appendAlpha(alpha) + ")";
 	}
-}
+};
 
 Convert.spaces.rgb = {
 	id: "rgb",
@@ -114,7 +115,7 @@ Convert.spaces.rgb = {
 		         [0.0193308187155918, 0.1191947797946259, 0.9505321522496605]];
 		return function(rgb) {
 			return matmul(M,this.toLinear(rgb));
-		}   
+		}
 	})(),
 
 	// xyz to sRGB
@@ -130,10 +131,75 @@ Convert.spaces.rgb = {
 	toString: function(coords,alpha) {
 		var rgb = coords.map(function(x) {return Math.round(x*255);});
 
+		function hex(n) {
+			return isNaN(n) ? '00' : ('0' + n.toString(16)).slice(-2);
+		}
+
 		if (alpha < 1) {
 			return "rgba(" + rgb.join(",") + "," + numstr(alpha) + ")";
 		} else {
-			return "rgb(" + rgb.join(",") + ")";
+			return "#" + hex(rgb[0]) + hex(rgb[1]) + hex(rgb[2]);
+		}
+	}
+};
+
+Convert.spaces.hsl = {
+	id: "hsl",
+	name: "HSL",
+	coords: [{name:"h",range:[0,360],isAngle:true},
+			 {name:"s",range:[0,1]},
+			 {name:"l",range:[0,1]}],
+	white: CIE.D65.white,
+	intoGamut: true,
+
+	toString: function(hsl,alpha) {
+		return "hsl("
+		+ (isNaN(hsl[0]) ? 0 : Math.round(hsl[0])) + " "
+		+ numstr(Math.round(hsl[1]*100)) + "% "
+		+ numstr(Math.round(hsl[2]*100)) + "% " + appendAlpha(alpha) + ")";
+	},
+
+	from: {
+		"rgb": function(rgb) {
+			var r = rgb[0], g = rgb[1], b = rgb[2];
+			var max = Math.max(r, g, b);
+			var min = Math.min(r, g, b);
+			var d = max - min;
+			var h = NaN,
+				s = 0, // zero when light is 0 or 1
+				l = (min+max)/2;
+
+			if(d !== 0) {
+				s = d / (l < 0.5 ? (max + min) : (2 - max - min));
+
+				switch (max) {
+					case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+					case g: h = (b - r) / d + 2; break;
+					case b: h = (r - g) / d + 4;
+				}
+
+				h = h * 60;
+			}
+
+			return [h, s, l];   // deg, [0..1], [0..1]
+		}
+	},
+
+	to: {
+		// Adapted from https://www.w3.org/TR/css-color-4/#hsl-to-rgb
+		"rgb": function(hsl) {
+			hsl = hsl.map(function (n) { return isNaN(n) ? 0 : n; });
+
+			var h = hsl[0], s = hsl[1], l = hsl[2];
+
+			h = (((h % 360) + 360) % 360);
+
+			var f = function(n) {
+				var k = (n + h/30) % 12;
+				var a = s * Math.min(l, 1 - l);
+				return l - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+			}
+			return [f(0),f(8),f(4)]; // normalized to [0..1]
 		}
 	}
 };
@@ -150,7 +216,7 @@ Convert.spaces.p3 = {
 	toLinear: Convert.spaces.rgb.toLinear,
 
 	toGamma: Convert.spaces.rgb.toGamma,
- 
+
 	toXYZ: (function() {
 		// computed from white point
 		var M = [[0.486570948648216,  0.2656676931690931, 0.1982172852343625],
@@ -158,7 +224,7 @@ Convert.spaces.p3 = {
 		         [0,                  0.0451133818589026, 1.0439443689009757]];
 		return function(rgb) {
 			return matmul(M,this.toLinear(rgb));
-		}   
+		}
 	})(),
 
 	fromXYZ: (function() {
@@ -186,16 +252,16 @@ Convert.spaces.lab = {
 
 	toXYZ: function(lab) {
 		var f=[];
-	
+
 		f[1] = (lab[0] + 16)/116;
 		f[0] = lab[1]/500 + f[1];
 		f[2] = f[1] - lab[2]/200;
-	
+
 		var xyz = f.map(function(value,i) {
 			var cubed = value * value * value;
 			return (cubed > CIE.ε ? cubed : (value * 116 - 16) / CIE.κ) * this.white[i];
 		},this);
-	
+
 		if (this.white != Convert.spaces.xyz.white) {
 			xyz = Convert.chromaticAdaptation(this.white,Convert.spaces.xyz.white,xyz);
 		}
@@ -210,24 +276,25 @@ Convert.spaces.lab = {
 		xyz = xyz.map(function(value,i) {
 			return value / this.white[i];
 		},this);
-	
+
 		var f = xyz.map(function(value,i) {
 			return value > CIE.ε ? Math.cbrt(value) : (CIE.κ * value + 16)/116;
 		});
-	
+
 		return [
 			clamp((116 * f[1]) - 16,0,100), // L
 			500 * (f[0] - f[1]), // a
 			200 * (f[1] - f[2])  // b
-		]; 
+		];
 	},
 
 	toString: function(lab,alpha) {
-		return "lab(" + numstr(lab[0]) * 100 + "% " 
-			+ numstr(lab[1]) + " " 
+		return "lab("
+			+ numstr(lab[0]) + "% "
+			+ numstr(lab[1]) + " "
 			+ numstr(lab[2]) + appendAlpha(alpha) + ")";
 	}
-}
+};
 
 /* https://www.magnetkern.de/srlab2.pdf */
 Convert.spaces.srlab2 = {
@@ -281,7 +348,7 @@ Convert.spaces.srlab2 = {
 			var y = 0.01 * lab[0],
 			    x = lab[1] * 1.16/500 + y,
 				z = y - lab[2] * 1.16/200;
-			
+
 			var xyz = matmul(M_HPE,[x,y,z]);
 			xyz = matmul(inv_M1,xyz.map(f));
 
@@ -327,7 +394,14 @@ Convert.spaces.srlab2 = {
 			return Convert.spaces.rgb.toGamma([rd,gn,bl]);
 		}
 	},
-}
+
+	toString: function(lab,alpha) {
+		return "srlab2("
+			+ numstr(lab[0]) + "% "
+			+ numstr(lab[1]) + " "
+			+ numstr(lab[2]) + appendAlpha(alpha) + ")";
+	}
+};
 
 /* https://bottosson.github.io/posts/oklab/ */
 Convert.spaces.oklab = {
@@ -337,7 +411,7 @@ Convert.spaces.oklab = {
 	         {name:"a",range:[-Infinity,Infinity]},
 	         {name:"b",range:[-Infinity,Infinity]} ],
 	white: CIE.D65.white,
-	
+
 	_lms2lab: (function() {
 		var M2 = [[ 0.2104542553,  0.7936177850, -0.0040720468],
 		          [ 1.9779984951, -2.4285922050,  0.4505937099],
@@ -346,13 +420,13 @@ Convert.spaces.oklab = {
 			lms[0] = Math.cbrt(lms[0]);
 			lms[1] = Math.cbrt(lms[1]);
 			lms[2] = Math.cbrt(lms[2]);
-		
+
 			var lab = matmul(M2,lms);
 			lab[0] = clamp(lab[0] * 100,0,100);
 			return lab;
 		};
 	})(),
-   
+
 	_lab2lms: (function() {
 		var M2inv = [[ 1,  0.3963377921737677,  0.2158037580607588],
 		             [ 1, -0.1055613423236563, -0.0638541747717059],
@@ -410,7 +484,7 @@ Convert.spaces.oklab = {
 			            [-1.2684380046,  2.6097574011, -0.3413193965],
 			            [-0.0041960863, -0.7034186147,  1.7076147010]];
 			return function(lab) {
-				var lms = this._lab2lms(lab),     
+				var lms = this._lab2lms(lab),
 					linRGB = matmul(Minv,lms);
 				return Convert.spaces.rgb.toGamma(linRGB);
 			};
@@ -418,18 +492,19 @@ Convert.spaces.oklab = {
 	},
 
 	toString: function(lab,alpha) {
-		return "oklab(" + numstr(lab[0]) * 100 + "% " 
-			+ numstr(lab[1]) + " " 
+		return "oklab("
+			+ numstr(lab[0]) + "% "
+			+ numstr(lab[1]) + " "
 			+ numstr(lab[2]) + appendAlpha(alpha) + ")";
 	}
-}
+};
 
 Convert.spaces.luv = {
 	id: "luv",
 	name: "Luv",
 	coords: [{name:"l",range:[0,100]},
 	         {name:"u",range:[-Infinity,Infinity]},
-	         {name:"v",range:[-Infinity,Infinity],isAngle:true} ],
+	         {name:"v",range:[-Infinity,Infinity]} ],
 	white: CIE.D65.white,
 	uvref: CIE.D65.uvref,
 
@@ -437,87 +512,70 @@ Convert.spaces.luv = {
 		if (luv[0] === 0) {
 			return [0,0,0];
 		}
-		
+
 		var L = luv[0],u = luv[1],v = luv[2];
 		var u0 = this.uvref[0];
 		var v0 = this.uvref[1];
-	
+
 		var u1 = u / (13 * L) + u0;
 		var v1 = v / (13 * L) + v0;
 		var d  = 4 * v1;
-	
+
 		var y = (L > CIE.κ * CIE.ε) ? Math.pow((L + 16) / 116,3) : L / CIE.κ;
 		var x = 9 * y *  u1 / d;
 		var z = y * (12 - 3 * u1 - 20 * v1) / d;
-	
-		return [x,y,z];  
+
+		return [x,y,z];
 	},
 
 	fromXYZ: function(xyz) {
 		var uR = this.uvref[0];
 		var vR = this.uvref[1];
-	
+
 		var denom = xyz[0] + 15*xyz[1] + 3*xyz[2];
 		if (denom === 0) {
 			return [0,0,0];
 		}
 		var u1 = 4 * xyz[0] / denom;
 		var v1 = 9 * xyz[1] / denom;
-		
+
 		var yR = xyz[1]; // (Yr = 1)
 		var l = yR > CIE.ε ? 116*Math.cbrt(yR) - 16 : CIE.κ * yR;
-	
+
 		var u =  13 * l * (u1 - uR);
 		var v =  13 * l * (v1 - vR);
 
-		return [l,u,v]; 
+		return [l,u,v];
 	},
 
 	toString: function(luv,alpha) {
-		return "luv(" + numstr(luv[0]) * 100 + "% "
+		return "luv("
+			+ numstr(luv[0]) + "% "
 			+ numstr(luv[1]) + " "
 			+ numstr(luv[2]) + appendAlpha(alpha) + ")";
 	}
-}
-
-// sets the color space from which lch is derived
-function defineLCH(nickname,base) {
-
-
-	var space = {}
-
-	space.coords = _lch.coords;
-	space.toString = _lch.toString;
-
-	space.id = nickname;
-	space.name = "LCH(" + base.id + ")";
-	space.white = base.white;
-	space.from = {}
-	space.from[base.id] = toLCH;
-	space.to = {}
-	space.to[base.id] = toCartesian;
-	Convert.spaces[space.id] = space;
-}
+};
 
 (function() {
 	var lch = {
 		coords: [{name:"l",range:[0,100]},
 				 {name:"c",range:[0,Infinity]},
 				 {name:"h",range:[0,360],isAngle:true}],
-	
+
 		toString: function(lch,alpha) {
-			return "lch(" + numstr(lch[0]) + "% " 
-			+ numstr(lch[1]) + " " 
+			return "lch("
+			+ numstr(lch[0]) + "% "
+			+ numstr(lch[1]) + " "
 			+ numstr(lch[2]) + appendAlpha(alpha) + ")";
 		}
 	};
 
 	var defineLCH = function(nickname,base) {
 		var space = {}
-	
+
 		space.coords = lch.coords;
 		space.toString = lch.toString;
-	
+
 		space.id = nickname;
 		space.name = "LCH(" + base.id + ")";
 		space.white = base.white;
@@ -547,7 +605,7 @@ function toLCH(tuple) {
 
 	if (c <= 0.0001) {
 		c = 0;
-		h = 0; //NaN;
+		h = NaN;
 	} else {
 		h = Math.atan2(b,a) * 180 / Math.PI; // convert to degrees
 	}
@@ -567,7 +625,7 @@ function toCartesian(lch) {
 
 	var a = c * Math.cos(h);
 	var b = c * Math.sin(h);
-	return [clamp(l,0,100), a, b]; 
+	return [clamp(l,0,100), a, b];
 }
 
 // Color space representation adapted from:
@@ -661,7 +719,7 @@ Convert.map = function(fromSpace,coords,toSpace) {
 	var xyz = fromSpace.toXYZ(coords);
 
 	return toSpace.fromXYZ(xyz);
-}
+};
 
 Convert.chromaticAdaptation = function(from,to,xyz) {
 	var M;
@@ -679,14 +737,14 @@ Convert.chromaticAdaptation = function(from,to,xyz) {
 		throw new TypeError("Only Bradford Chromatic Adaptation with white points D50 and D65 are supported.");
 	}
 	return matmul(M,xyz);
-}
+};
 
 // check each coordinate in <coords> are within the bounds
 Convert.isInSpace = function(space,coords) {
 	if (typeof space === "string") {
 		space = Convert.getSpace(space)
 	}
-	
+
 	var isInSpace = coords.every(function(v,i) {
 		var epsilon = .00005;
 		var min = space.coords[i].range[0];
@@ -695,17 +753,17 @@ Convert.isInSpace = function(space,coords) {
 	});
 
 	if (isInSpace) {
-		space.clip(coords); 
+		space.clip(coords);
 	}
 	return isInSpace;
-}
+};
 
 Convert.getSpace = function(spaceID) {
 	if (! Convert.spaces.hasOwnProperty(spaceID)) {
 		throw new TypeError("unknown color space: " + spaceID);
 	}
 	return Convert.spaces[spaceID];
-}
+};
 
 // clips components of coords to valid range; padd missing members to zero.
 function clip(coords) {
@@ -733,6 +791,9 @@ function numstr(n) {
 }
 
 function appendAlpha(a,join) {
+	if (isNaN(a)) {
+		return " / 0";
+	}
 	return a < 1 ? " / " + numstr(a) : "";
 }
 

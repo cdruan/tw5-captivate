@@ -12,6 +12,13 @@ Utility functions.
 /*global $tw: true */
 "use strict";
 
+/**
+ * UI components: background color <= this lightness can
+ * be paired with white text with enough contrast even
+ * if the contrast ratio is less than recommended AA
+ */
+exports.MaxContrastWhite = 75;
+
 exports.wikifyText = function (t, parentWidget) {
 	var parser = $tw.wiki.parseText("text/vnd.tiddlywiki",t,{ parseAsInline: true });
 	var widgetNode = $tw.wiki.makeWidget(parser,{
@@ -22,9 +29,6 @@ exports.wikifyText = function (t, parentWidget) {
 	widgetNode.render(container,null);
 	return container.textContent;
 }
-
-// colors under this lightness will have white text
-exports.autocontrast = 68;
 
 var _parseCSSColor = $tw.utils.parseCSSColor;
 

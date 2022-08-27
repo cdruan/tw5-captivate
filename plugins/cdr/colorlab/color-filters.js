@@ -33,66 +33,45 @@ exports.colour = function(source,operator,options) {
 	return [];
 };
 
-exports.lightness = makeColorBinaryOperator(
-	function(color_str,operand) {
-		var macro = $tw.macros["color-lightness"];
-		return macro.run(color_str,operand);
-	}
-);
+exports.lightness = makeColorBinaryOperator("color-lightness");
 
-exports.alpha = makeColorBinaryOperator(
-	function(color_str,operand) {
-		var macro = $tw.macros["color-alpha"];
-		return macro.run(color_str,operand);
-	}
-);
+exports.alpha = makeColorBinaryOperator("color-alpha");
 
-exports.autocontrast = makeColorBinaryOperator(
-	function(color_str,operand) {
-		var macro = $tw.macros["color-autocontrast"];
-		return macro.run(color_str,operand);
-	}
-);
-
-exports.mute = makeColorBinaryOperator(
-	function(color_str,operand) {
-		var macro = $tw.macros["color-mute"];
-		return macro.run(color_str,operand);
-	}
-);
+exports.mute = makeColorBinaryOperator("color-mute");
 
 /*
-Mix input with the operand with optional second operand specifying the 
+Mix input with the operand with optional second operand specifying the
 weighting for the operand (default=0.5).
 */
 exports.mix = function(source,operator,options) {
-	var result = [];
-	var macro = $tw.macros["color-mix"];
+	var result = [],
+		macro = $tw.macros["color-mix"];
+		//colorStr = utils.wikifyText(operator.operands[0].trim(),options.widget);
 
 	source(function(tiddler,title) {
-		result.push(macro.run(title,operator.operands[0].trim(),operator.operands[1]));
+		result.push(macro.run.call(options.widget,title,operator.operand.trim(),operator.operands[1]));
 	});
 	return result;
 };
 
+exports.over = makeColorBinaryOperator("color-over");
+
+exports.autocontrast = makeColorBinaryOperator("color-autocontrast");
+
 /*
-Mix input with the operand with optional second operand specifying the 
+Mix input with the operand with optional second operand specifying the
 weighting for the operand (default=0.5).
 */
-exports.deviate =  makeColorBinaryOperator(
-	function(color_str,operand) {
-		var macro = $tw.macros["color-deviate"];
-		return macro.run(color_str,operand);
-	}
-);
+exports.deviate =  makeColorBinaryOperator("color-deviate");
 
-function makeColorBinaryOperator(fnCalc) {
+function makeColorBinaryOperator(macroName) {
 	return function(source,operator,options) {
+		options = options || {widget: $tw.rootWidget};
 		var result = [];
-		    //numOperand = operator.operand.trim() === "" ? undefined : $tw.utils.parseNumber(operator.operand);
+		var macro = $tw.macros[macroName];
 
 		source(function(tiddler,title) {
-			result.push(fnCalc(title,operator.operand.trim()));
+			result.push(macro.run.call(options.widget,title,operator.operand.trim()));
 		});
 		return result;
 	};
