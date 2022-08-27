@@ -76,7 +76,7 @@ WikifyPaletteWidget.prototype.invokeAction = function(triggeringWidget,event) {
 			var hex = [rgba[0],rgba[1],rgba[2],alpha].map(function(e) {
 				return ("0" + e.toString(16)).slice(-2);
 			});
-			
+
 			var hexstr = "#" + hex.join("");
 
 			if (alpha == 255) {
@@ -100,14 +100,14 @@ WikifyPaletteWidget.prototype.invokeAction = function(triggeringWidget,event) {
 			if (window.matchMedia("(color-gamut: p3)").matches) {
 				colorString = (new Color(color)).toString("p3");
 			} else {
-				colorString = (new Color(color)).toString("rgb");				
+				colorString = (new Color(color)).toString("rgb");
 			}
 		}
 
 		data[key] = colorString;
 	}
 
-	var newFields = { 
+	var newFields = {
 		title: this.dstTiddler,
 		tags: "$:/tags/Palette",
 		name: srcTiddler.fields.name,
@@ -117,6 +117,9 @@ WikifyPaletteWidget.prototype.invokeAction = function(triggeringWidget,event) {
 	};
 	newFields.text = $tw.utils.makeTiddlerDictionary(data);
 
+	if(srcTiddler.fields['color-scheme']) {
+		newFields['color-scheme'] = srcTiddler.fields['color-scheme'];
+	}
 	this.wiki.addTiddler(new $tw.Tiddler(this.wiki.getCreationFields(),newFields));
 	return true; // Action was invoked
 };
