@@ -2,9 +2,13 @@ title: $:/themes/cdr/captivate/css/base
 tags: $:/tags/Stylesheet
 list-after: $:/themes/tiddlywiki/vanilla/base
 
+\rules only filteredtranscludeinline transcludeinline macrodef macrocallinline macrocallblock html
+
 \define dur() 300ms
 
-/* FONTS */
+\define outline-color() {{{ [colour[selection-background]deviate[]] }}}
+
+/* Captivate Theme CSS */
 
 h1,h2,h3,h4,h5,h6 { font-weight: 400; }
 
@@ -43,20 +47,30 @@ h2 { font-size: 1.32em; }
 
 /* HTML TWEAKS */
 
-input, textarea {
+pre {
+	background-color: <<colour tiddler-editor-background>>;
+	border: 1px solid <<colour tiddler-editor-border>>;
+}
+
+input, textarea, select {
 	transition: border .14s ease-in-out;
 	border: 1px solid <<colour tiddler-editor-border>>;
 	padding: .5em;
 	border-radius: 5px;
 }
 
-input:focus, textarea:focus,
-.tc-tiddler-frame input.tc-edit-texteditor:focus,
-.tc-tiddler-frame textarea.tc-edit-texteditor:focus,
-.tc-tiddler-frame iframe.tc-edit-texteditor:focus {
-	box-shadow: 0 0 3px 0 <<colour selection-background>>;
-	border-color: <<colour selection-background>>;
-	outline: 0;
+:focus-visible {
+	outline: 1px solid <<outline-color>>;
+	outline-offset: 1px;
+}
+
+input:focus-visible, textarea:focus-visible,
+.tc-tiddler-frame input.tc-edit-texteditor:focus-visible,
+.tc-tiddler-frame textarea.tc-edit-texteditor:focus-visible,
+.tc-tiddler-frame iframe.tc-edit-texteditor:focus-visible {
+	box-shadow: 0 0 3px 1px  <<outline-color>>;
+	border-color: <<outline-color>>;
+	outline: none;
 }
 
 input[type="radio"] {
@@ -83,7 +97,7 @@ input[type="color"] {
 
 input[type="range"] {
 	padding: 0;
-	<<box-shadow "none">>
+	box-shadow: none;
 }
 
 textarea, input[type="text"], input[type="search"], input[type=""], input:not([type]) {
@@ -95,9 +109,9 @@ hr {
 	border-top: 1px solid <<colour tab-divider>>;
 }
 
-button {
-	font-weight: 500;
-	padding: 3px 8px;
+html button {
+	font-weight: 600;
+	padding: 3px 9px;
 	cursor: pointer;
 	transition: box-shadow ease-in .1s;
 }
@@ -134,23 +148,23 @@ button:disabled:not(.tc-btn-invisible):hover {
 }
 
 button:not(.tc-btn-invisible):hover {
-	opacity: 0.88;
+	background-color: <<colour button-background-hover>>;
 }
 
-div:not(.tc-tab-buttons) button:not(.tc-btn-invisible):focus {
+div:not(.tc-tab-buttons) button:not(.tc-btn-invisible):focus-visible {
 	outline: none;
-	box-shadow: 0 0 2px 1px <<colour selection-background>>;
+	box-shadow: 0 0 2px 1px <<outline-color>>;;
 }
 
-button.tc-secondary-btn {
+button.cv-secondary-btn {
 	background: <<colour secondary-button-background>>;
 	color: <<colour secondary-button-foreground>>;
 	fill: <<colour secondary-button-foreground>>;
 	border: 1px solid <<colour secondary-button-border>>;;
 }
 
-button.tc-secondary-btn:not(:disabled):hover {
-	opacity: 0.85;
+button.cv-secondary-btn:not(:disabled):hover {
+	background-color: <<colour secondary-button-background-hover>>;
 }
 
 /* POPUPS */
@@ -164,7 +178,16 @@ button.tc-secondary-btn:not(:disabled):hover {
 	overflow-y: auto;
 	font-weight: normal;
 	border-radius: 2px;
-	<<box-shadow "0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12)">>
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+}
+
+.tc-block-dropdown .tc-tab-buttons a {
+  display: revert;
+  padding: 0px;
+}
+
+.tc-block-dropdown a.tc-tiddlylink-external {
+  display: unset;
 }
 
 .tc-drop-down .tc-menu-list-item > a.tc-tiddlylink {
@@ -175,18 +198,25 @@ button.tc-secondary-btn:not(:disabled):hover {
 	text-align: left !important;
 }
 
-.tc-drop-down a:hover, .tc-drop-down a.tc-tiddlylink:hover,
-.tc-drop-down button:hover, .tc-drop-down .tc-file-input-wrapper:hover button,
+.tc-drop-down a:hover,
+.tc-drop-down a.tc-tiddlylink:hover,
+.tc-drop-down button:hover,
+.tc-drop-down .tc-file-input-wrapper:hover button,
 .tc-drop-down button.tc-btn-invisible:hover svg,
-.tc-chosen, .tc-chooser-item:hover {
+.tc-chosen,
+.tc-chooser-item:hover,
+a.tc-tiddlylink.tc-plugin-info:hover {
 	color: <<colour selection-foreground>>;
 	fill: <<colour selection-foreground>>;
-	background-color: <<colour selection-background>>;
+	background-color: {{{ [colour[selection-background]alpha[0.45]] }}};
 	opacity: 1;
 }
 
+.tc-chosen {
+	background-color: {{{ [colour[selection-background]alpha[0.65]] }}};
+}
+
 .tc-drop-down .tc-btn-invisible {
-	display: block !important;
 	margin: 0 !important;
 	text-align: left !important;
 	font-weight: normal;
@@ -197,6 +227,11 @@ button.tc-secondary-btn:not(:disabled):hover {
 	color: <<colour selection-foreground>>;
 }
 
+.tc-block-dropdown a.tc-tiddlylink:hover {
+	background-color: {{{ [colour[tiddler-link-foreground]alpha[0.1]] }}};
+	color: <<colour tiddler-link-foreground>>;
+}
+
 .tc-chosen, .tc-chooser-item:hover {
 }
 
@@ -204,10 +239,23 @@ button.tc-secondary-btn:not(:disabled):hover {
 	background-color: revert;
 }
 
+.tc-drafts-list a {
+	font-size: 1.25em;
+	font-weight: normal;
+	border: 1px solid <<colour background>>;
+	background: <<colour dirty-indicator>>;
+	color: {{{ [colour[dirty-indicator]autocontrast[]] }}};
+	fill: {{{ [colour[dirty-indicator]autocontrast[]] }}};
+}
 /* TABS */
 
 div.tc-tab-set {
-	<<box-shadow "none">>
+	box-shadow: none;
+}
+
+.tc-tab-set .tc-tab-content.tc-vertical {
+	z-index: 100;
+	border-left: 1px solid <<colour tab-divider>>;
 }
 
 .tc-tab-set .tc-tab-buttons button {
@@ -224,7 +272,7 @@ div.tc-tab-set {
 }
 
 .tc-tab-set .tc-tab-buttons:not(.tc-vertical) button.tc-tab-selected {
-	font-weight: 500;
+	font-weight: 600;
 }
 
 /*
@@ -244,7 +292,7 @@ div.tc-tab-set {
 .tc-tab-set > .tc-tab-buttons.tc-vertical > button.tc-tab-selected {
 	background-color: <<colour tab-background-selected>>;
 	color: <<colour tab-foreground-selected>>;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 /* TOPBAR */
@@ -294,18 +342,22 @@ button.cv-topbar-btn {
 .tc-search-drop-down a {
 	white-space: nowrap;
 	text-overflow: ellipsis;
-	font-size: 12.5px;
+	font-size: .92em;
 }
 
+/*
 .tc-search-drop-down a:hover {
 	white-space: normal;
 }
+*/
 
 /* SIDEBAR */
 
 div.cv-sidebar {
-	font-size: 13px;
-	background-color: <<colour page-background>>;
+	font-size: .95em;
+	background-color: <<colour sidebar-background>>;
+	color: <<colour sidebar-foreground>>;
+	fill: <<colour sidebar-foreground>>;
 }
 
 .cv-sidebar .tc-tab-set.tc-sidebar-tabs-main > .tc-tab-buttons > button {
@@ -315,7 +367,7 @@ div.cv-sidebar {
 .cv-sidebar .tc-tab-set.tc-sidebar-tabs-main > .tc-tab-buttons > .tc-tab-selected,
 .cv-sidebar .tc-tab-set.tc-sidebar-tabs-main .tc-tab-buttons.tc-vertical > .tc-tab-selected {
 	color: <<colour sidebar-tab-foreground-selected>>;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .tc-tab-buttons.tc-sidebar-tabs-main > button {
@@ -333,6 +385,7 @@ div.cv-sidebar {
 
 .tc-sidebar-tabs-main a.tc-tiddlylink:hover {
 	color: <<colour sidebar-tiddler-link-foreground-hover>>;
+	background-color: <<colour selection-background>>;
 }
 
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more > div > .tc-menu-list-item,
@@ -351,7 +404,6 @@ div.cv-sidebar {
 .cv-sidebar .tc-tab-content.tc-sidebar-tabs-more .tc-menu-list-item > .tc-menu-list-subitem:hover {
 	white-space: normal;
 	background-color: <<colour selection-background>>;
-	foreground: <<colour selection-foreground>>;
 }
 
 .cv-sidebar .tc-sidebar-tabs-more .tc-tab-set .tc-menu-list-item {
@@ -361,18 +413,13 @@ div.cv-sidebar {
 
 .cv-sidebar .tc-tab-content div[class^="tc-btn-"] button,
 .tc-sidebar-lists .tc-tab-content div[class^="tc-btn-"] button {
-	/*
-	background: linear-gradient(to bottom,rgba(99,99,99,.1) 0,rgba(0,0,0,.125) 100%);
-	color: #121212;
-	fill: #121212;
-	*/
-	background: <<colour secondary-button-background>>;
+	background-color: <<colour secondary-button-background>>;
 	color: <<colour secondary-button-foreground>>;
 	fill: <<colour secondary-button-foreground>>;
 }
 
 .cv-sidebar .tc-tab-content div[class^="tc-btn-"] button:hover {
-	background: <<colour secondary-button-background-hover>>;
+	background-color: <<colour secondary-button-background-hover>>;
 }
 
 /* ACCENT TOPBAR: YES */
@@ -380,32 +427,37 @@ div.cv-sidebar {
 <$reveal type="nomatch" state="$:/themes/cdr/captivate/settings/accent-topbar" text="no" default="yes">
 	.cv-topbar-wrapper {
 		background: <<colour primary>>;
-		<<box-shadow "0 2px 5px -1px rgba(60,64,67,.26), 0 3px 5px 0px rgba(60,64,67,0.13)">>
+		/*
+		box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+		*/
 	}
 
 	.cv-topbar-wrapper .cv-topbar-title,
 	.cv-topbar-wrapper .cv-topbar-btn,
 	.cv-topbar-wrapper .cv-search-bar > .tc-btn-invisible,
 	.cv-topbar-wrapper .tc-page-controls > .tc-btn-invisible svg {
-		color: <<colour on-primary>>;
-		fill: <<colour on-primary>>;
+		color: {{{ [colour[primary]autocontrast[]] }}};
+		fill: {{{ [colour[primary]autocontrast[]] }}};
 	}
 
-	<$wikify name=bgcolor text="""<<colour primary>>""" >
-	.cv-search-bar input:not(:focus) {
-		background-color: <$macrocall $name="color-deviate" color=<<bgcolor>> />;
-		color: {{{ [<bgcolor>autocontrast[]alpha[0.75]] }}};
+	.cv-search-bar input:not(:focus-visible) {
+		background-color: {{{ [[#fff]alpha[0.2]over<colour primary>] }}};
+		color: {{{ [[#fff]alpha[0.2]over<colour primary>autocontrast[]] }}};
 	}
-	</$wikify>
+
+	.cv-search-bar input:not(:focus-visible)::placeholder {
+		color: {{{ [colour[primary]deviate[]autocontrast[]] }}};
+		opacity: 0.85;
+	}
 
 	@media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
 		div.cv-sidebar {
-			<<box-shadow "1px 3px 1px rgba(60,64,67,0.25), 1px 3px 2px rgba(60,64,67,0.15)">>
+			border-right: 1px solid <<colour sidebar-tab-divider>>;
 		}
 	}
 
 	.tc-tiddler-frame {
-		<<box-shadow "0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20)">>
+		box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.20);
 	}
 </$reveal>
 
@@ -430,24 +482,23 @@ div.cv-sidebar {
 		fill: <<colour page-background>>;
 	}
 
-	<$wikify name=bgcolor text="<<colour page-background>>">
-		.cv-search-bar input:not(:focus) {
-			background-color: <$macrocall $name="color-deviate" color=<<bgcolor>> />;
-			color: {{{ [<bgcolor>autocontrast[]alpha[0.75]] }}};
+	<$vars bgcolor={{{ [colour[page-background]deviate[]] }}} fgcolor={{{ [colour[page-background]deviate[]autocontrast[]] }}} >
+		.cv-search-bar input:not(:focus-visible) {
+			background-color: <<bgcolor>>;
+			color: <<fgcolor>>;
 		}
-	</$wikify>
+		.cv-search-bar input:not(:focus-visible)::placeholder {
+			color: <<fgcolor>>;
+			opacity: 0.7;
+		}
+	</$vars>
 
 	.tc-tiddler-frame {
-		<<box-shadow "0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.10), 0 1px 5px 0 rgba(0,0,0,0.15)">>
+		box-shadow: 2px 1px 6px 2px rgba(0,0,0,0.10);
 	}
 </$reveal>
 
 /* VANILLA TWEAKS */
-
-button.tc-tag-label,
-span.tc-tag-label {
-	border-radius: 8px;
-}
 
 button.tc-untagged-label.tc-tag-label {
 	color: <$macrocall $name="color-autocontrast" color={{{ [colour[untagged-background]] }}} />;
@@ -467,7 +518,7 @@ button.tc-untagged-label.tc-tag-label {
 
 .tc-modal {
 	border-radius: 6px;
-	<<box-shadow "0 3px 7px rgba(0,0,0,0.3)">>
+	box-shadow: 0 3px 7px rgba(0,0,0,0.3);
 }
 
 .tc-modal-footer {
@@ -503,7 +554,6 @@ a.tc-tiddlylink:visited {
 a.tc-tiddlylink-external,
 a.tc-tiddlylink-external:visited {
 	text-decoration: none;
-	font-weight: 500;
 }
 
 a.tc-tiddlylink:hover,
@@ -518,9 +568,9 @@ a.tc-tiddlylink-external:hover {
     height: 10px;
     width: 10px;
     display: inline-block;
-    -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m 7.5,0.5 h 4 v 4 M 3.5,2 h -3 v 9.5 H 10 v -3 M 11.5,0.5 5,7' fill='none' stroke='%23000' stroke-linecap='round' stroke-width='1.25' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-    mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m 7.5,0.5 h 4 v 4 M 3.5,2 h -3 v 9.5 H 10 v -3 M 11.5,0.5 5,7' fill='none' stroke='%23000' stroke-linecap='round' stroke-width='1.25' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-    -webkit-mask-size: cover;
+	-webkit-mask: url("data:image/svg+xml,%3Csvg version='1.1' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m7.5 0.5h4v4m-8-4h-3v11h11v-3m0-8-6.5 6.5' fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.25'/%3E%3C/svg%3E");
+	mask: url("data:image/svg+xml,%3Csvg version='1.1' viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m7.5 0.5h4v4m-8-4h-3v11h11v-3m0-8-6.5 6.5' fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.25'/%3E%3C/svg%3E");
+	-webkit-mask-size: cover;
     mask-size: cover;
     background-color: currentcolor;
     margin: 0 2px 0 3px;
@@ -528,13 +578,6 @@ a.tc-tiddlylink-external:hover {
     color-adjust: exact;
     print-color-adjust: exact;
   }
-}
-
-a.tc-tiddlylink.tc-plugin-info:hover {
-	text-decoration: none;
-	background-color: <<colour selection-background>>;
-	color: <<colour selection-foreground>>;
-	fill: <<colour selection-foreground>>;
 }
 
 a.tc-tiddlylink.tc-plugin-info:hover > .tc-plugin-info-chunk > svg {
@@ -547,6 +590,10 @@ a.tc-tiddlylink.tc-plugin-info:hover > .tc-plugin-info-chunk > svg {
 
 .tc-tiddler-body code {
 	font-size: 0.95em;
+}
+
+.tc-tiddler-info {
+
 }
 
 /* FAB BUTTONS */
@@ -569,11 +616,16 @@ button.cv-fab-item svg {
 }
 
 button.cv-fab-item .tc-image-cloud-idle {
-	fill: <<colour fab-background>>;
+	fill: {{{ [colour[fab-background]] }}};
 }
 
 .tc-page-controls button.cv-fab-item:hover {
 	background: <<colour fab-background-hover>>;
+}
+
+.tc-page-controls button.cv-fab-item:hover svg {
+	fill: {{{ [colour[fab-background-hover]autocontrast[]] }}};
+	color: {{{ [colour[fab-background-hover]autocontrast[]] }}};
 }
 
 button.cv-fab-item:hover .tc-image-cloud-idle {
@@ -584,7 +636,7 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 
 @media (max-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
 	.cv-sidebar .tc-sidebar-tabs {
-		<<box-shadow "0px 2px 10px rgba(0, 0, 0, 0.5)">>
+		box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
 	}
 
 	.tc-block-dropdown.cv-search-dropdown {
@@ -608,11 +660,11 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 	</$reveal>
 
 	.tc-block-dropdown.cv-search-dropdown {
-		<<box-shadow "0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12)">>
+		box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
 	}
 
 	.tc-tiddler-frame {
-		<<box-shadow "0px 2px 3px rgba(0, 0, 0, 0.5)">>
+		box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.5);
 	}
 }
 
@@ -628,6 +680,9 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 </$reveal>
 
 @media print {
+	:root {
+		color-scheme: light;
+	}
 	.tc-tiddler-body a[href^=http]:after {
 		content:" <" attr(href) "> ";
 		font-size: 0.85em;

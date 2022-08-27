@@ -54,13 +54,13 @@ title: $:/themes/cdr/captivate/css/base-layout
 	z-index: -1;
 }
 
-.tc-tab-content.tc-vertical {
+.tc-tab-set .tc-tab-content.tc-vertical {
 	margin-top: 0;
 	margin-left: 0px;
-	border-left: 1px solid <<colour tab-divider>>;
 }
 
 .tc-tab-content .tc-search-results {
+	display: block;
 	overflow-y: auto;
 	height: 50vh;
 }
@@ -176,19 +176,24 @@ div.tc-tab-content div.tc-file-input-wrapper {
 
 .cv-search-bar input:focus {
 	width:25em;
+	outline: 1px solid <<colour muted-foreground>>;
 }
 
 div.cv-search-dropdown {
 	position: fixed;
 	top: <<voffset>>;
 	right: 10px;
-	min-width: 450px;
-	max-width: 450px;
+	min-width: 30%;
+	max-width: 30%;
 	max-height: 80vh;
 	margin: 0px;
 	padding: 0px;
-	border: none;
 	overflow-y: hidden;
+}
+
+.cv-search-dropdown p {
+	margin-top: 3px;
+	margin-bottom: 3px;
 }
 
 .cv-search-dropdown > .tc-tab-set > .tc-tab-buttons {
@@ -306,11 +311,6 @@ div.cv-sidebar {
 .cv-sidebar .tc-more-sidebar {
 	height: calc(100vh - <<voffset>> - 28px - 30px);
 	height: calc(-webkit-fill-available - <<voffset>> - 28px - 30px);
-	/*
-	scrollbar-width: none;
-	overflow-y: scroll;
-	-webkit-overflow-scrolling: touch;
-	*/
 }
 
 div.tc-more-sidebar > .tc-tab-set,
@@ -398,10 +398,8 @@ cv-sidebar .tc-more-sidebar {
 		height: calc(100vh - <<voffset>>);
 	}
 
-	@media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
-		div.cv-sidebar {
-			border-right: 1px solid <<colour sidebar-tab-divider>>;
-		}
+	.tc-story-river {
+		padding-top: calc(<<voffset>> + 20px);
 	}
 </$reveal>
 
@@ -417,7 +415,6 @@ cv-sidebar .tc-more-sidebar {
 	div.cv-sidebar {
 		top: 0px;
 		height: 100%;
-		border-right: 1px solid <<colour sidebar-tab-divider>>;
 	}
 
 	div.cv-sidebar-header {
@@ -434,14 +431,11 @@ cv-sidebar .tc-more-sidebar {
 /* STORY RIVER */
 
 @media (min-width: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarbreakpoint}}) {
-	.tc-story-river {
-		width: unset;
-	}
-
 	<$reveal type="nomatch" state="$:/state/sidebar" text="no" default={{{[subfilter{$:/themes/cdr/captivate/ui/SideBar/default}] }}} >
 		.tc-story-river {
 			margin-left: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth}};
 			margin-right: unset;
+			width: calc(100vw - {{$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth}});
 		}
 
 		<$reveal type="match" state="$:/view" text="zoomin">
@@ -452,6 +446,9 @@ cv-sidebar .tc-more-sidebar {
 	</$reveal>
 
 	<$reveal type="match" state="$:/state/sidebar" text="no" default={{{[subfilter{$:/themes/cdr/captivate/ui/SideBar/default}] }}} >
+		.tc-story-river {
+			width: 100vw;
+		}
 		.cv-topbar-wrapper .cv-topbar-title {
 			visibility: visible;
 		}
@@ -465,11 +462,12 @@ cv-sidebar .tc-more-sidebar {
 	</$reveal>
 
 	.tc-tiddler-frame {
-		width: {{$:/themes/cdr/captivate/settings/tiddlerwidth}};
+		width: 80%;
+		width: min(80%, {{$:/themes/cdr/captivate/settings/tiddlerwidth}});
 		margin-left: auto;
 		margin-right: auto;
 		padding: 24px 48px 36px;
-		border-radius: 4px;
+		border-radius: 8px;
 	}
 }
 
@@ -554,7 +552,7 @@ cv-sidebar .tc-more-sidebar {
 		top: 0px;
 		padding: 0px;
 		margin-top: <<voffset>>;
-		margin-bottom: 40px;
+		margin-bottom: <<voffset>>;
 	}
 }
 
@@ -564,7 +562,7 @@ cv-sidebar .tc-more-sidebar {
 	.cv-fab-wrapper {
 		position: fixed;
 		top: <<voffset>>;
-		right: 0; /* xy */
+		right: 3px;
 		z-index: 800;
 	}
 
@@ -623,7 +621,7 @@ cv-sidebar .tc-more-sidebar {
 		width: 100%;
 		padding: 0px;
 		margin-bottom: 18pt;
-		<<box-shadow none>>;
+		box-shadow: none;
 		page-break-inside: avoid;
 	}
 }

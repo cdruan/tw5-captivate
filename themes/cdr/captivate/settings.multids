@@ -1,10 +1,10 @@
 title: $:/themes/cdr/captivate/
 
-settings/accent-topbar: yes
-settings/color-primary: #01579B
-settings/color-secondary: #0190fe
-settings/color-link: #cfd8dc
+settings/accent-topbar: no
+settings/color-primary: #5778d8
+settings/color-secondary: #eecc66
+settings/color-link: #5778d8
 settings/palette-theme: light
-settings/text-on-dark: range(63,95)
+settings/text-on-dark: range(67,95)
 settings/text-on-light: range(10,48)
 settings/tiddlerwidth: 900px
