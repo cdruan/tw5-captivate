@@ -117,5 +117,5 @@ toolbar-close-button:
 toolbar-delete-button:
 toolbar-cancel-button:
 toolbar-done-button:
-untagged-background: #c0c0c0
+untagged-background: #707070
 very-muted-foreground: #c0c0c0
