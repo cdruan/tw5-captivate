@@ -2,7 +2,7 @@ title: $:/themes/cdr/captivate/css/highlight-js-dark
 tags: $:/tags/Stylesheet
 list-after: $:/plugins/tiddlywiki/highlight/styles
 
-<$reveal type="match" state="$:/themes/cdr/captivate/settings/palette-theme" text="dark" default="light">
+<$reveal stateTitle={{$:/palette}} stateField="color-scheme" type="match" text="dark" default="light">
 .hljs {
 	display: block;
 	overflow-x: auto;
@@ -10,6 +10,10 @@ list-after: $:/plugins/tiddlywiki/highlight/styles
 	background: <<colour tiddler-editor-background>>;
 	color: <<colour foreground>>;
 	-webkit-text-size-adjust:none
+}
+
+.hljs-code {
+	color: <$macrocall $name="color-lightness" color="#8cb941" value={{$:/themes/cdr/captivate/settings/text-on-dark}} />;
 }
 
 .hljs-comment,
@@ -61,18 +65,20 @@ list-after: $:/plugins/tiddlywiki/highlight/styles
 .hljs-meta .hljs-keyword,
 .hljs-selector-attr,
 .hljs-selector-pseudo,
+.hljs-operator,
 .hljs-link {
 	color: <$macrocall $name="color-lightness" color="#cb4b16" value={{$:/themes/cdr/captivate/settings/text-on-dark}} />;
 }
 
 /* Solarized Red */
+.hljs-template-tag,
 .hljs-built_in,
 .hljs-deletion {
 	color: <$macrocall $name="color-lightness" color="#dc322f" value={{$:/themes/cdr/captivate/settings/text-on-dark}} />;
 }
 
 .hljs-formula {
-	background: #002a5a;
+	background: <$macrocall $name="color-lightness" color="#002a5a" value={{$:/themes/cdr/captivate/settings/text-on-dark}} />;
 }
 
 .hljs-emphasis {
@@ -82,5 +88,4 @@ list-after: $:/plugins/tiddlywiki/highlight/styles
 .hljs-strong {
 	font-weight: bold;
 }
-
 </$reveal>
