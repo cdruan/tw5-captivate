@@ -150,10 +150,10 @@ html button {
 button:disabled:not(.tc-btn-invisible),
 button:disabled:not(.tc-btn-invisible):hover {
 	cursor: default;
-	opacity: 30%;
+	opacity: 53%;
 }
 
-button:not(.tc-btn-invisible):hover {
+button:not(:disabled):not(.tc-btn-invisible):hover {
 	background-color: <<colour button-background-hover>>;
 }
 
