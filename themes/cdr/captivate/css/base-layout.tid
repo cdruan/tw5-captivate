@@ -435,7 +435,7 @@ cv-sidebar .tc-more-sidebar {
 		.tc-story-river {
 			margin-left: {{$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth}};
 			margin-right: unset;
-			width: calc(100vw - {{$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth}});
+			width: calc(100vw - {{$:/themes/tiddlywiki/vanilla/metrics/sidebarwidth}} - 30px);
 		}
 
 		<$reveal type="match" state="$:/view" text="zoomin">

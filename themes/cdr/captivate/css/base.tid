@@ -52,10 +52,16 @@ pre {
 	border: 1px solid <<colour tiddler-editor-border>>;
 }
 
-input, textarea, select {
+input, textarea {
 	transition: border .14s ease-in-out;
 	border: 1px solid <<colour tiddler-editor-border>>;
 	padding: .5em;
+	border-radius: 5px;
+}
+
+select {
+	border: 1px solid <<colour tiddler-editor-border>>;
+	padding: 1px 5px;
 	border-radius: 5px;
 }
 
@@ -677,6 +683,16 @@ button.cv-fab-item:hover .tc-image-cloud-idle {
 
 <$reveal type="match" state="$:/layout" text="$:/themes/cdr/captivate/ui/PageLayout">
 {{$:/themes/cdr/captivate/css/base-layout}}
+</$reveal>
+
+<$reveal type="match" stateTitle={{$:/palette}} stateField="color-scheme" text="dark">
+.tc-tiddler-body p {
+	word-spacing: 0.1em;
+}
+
+mark {
+	background-color: #eeee00;
+}
 </$reveal>
 
 @media print {
