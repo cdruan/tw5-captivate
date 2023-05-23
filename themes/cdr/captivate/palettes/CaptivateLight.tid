@@ -49,7 +49,7 @@ modal-header-border: #eee
 muted-foreground: #707070
 notification-background: <$macrocall $name="color-lightness" color=<<colour primary>> value="90" />
 notification-border: <<colour secondary-button-border>>
-page-background: {{{ [colour[primary]alpha[.12]over[#ededed]lightness[93.5]] }}}
+page-background: {{{ [colour[primary]alpha[.19]over[#f8f8f8]lightness[93.5]] }}}
 pre-background: <<colour code-background>>
 pre-border: <<colour code-border>>
 primary: {{{ [{$:/themes/cdr/captivate/settings/color-primary}] }}}

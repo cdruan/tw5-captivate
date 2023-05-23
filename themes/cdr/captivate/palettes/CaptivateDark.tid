@@ -8,7 +8,7 @@ alert-background: #660015
 alert-border: <<colour very-muted-foreground>>
 alert-highlight: #ff8b69
 alert-muted-foreground: <<colour tiddler-subtitle-foreground>>
-background: {{{ [colour[primary]lightness[30]alpha[0.3]over[#030303]lightness[8.5]] }}}
+background: {{{ [colour[primary]lightness[30]alpha[0.3]over[#030303]lightness[15]] }}}
 blockquote-bar: #505050
 button-background: <<colour primary>>
 button-background-hover: {{{ [colour[button-background]mix[#fff],[.15]] }}}
@@ -34,7 +34,7 @@ external-link-foreground-hover: <<colour tiddler-link-foreground>>
 external-link-foreground-visited: <<colour tiddler-link-foreground>>
 external-link-foreground: <<colour tiddler-link-foreground>>
 fab-background-hover: {{{ [colour[primary]lightness[40]] }}}
-foreground: #d0d0d0
+foreground: #c6c6c6
 message-background: #014272
 message-border: <<colour message-background>>
 message-foreground: <<colour foreground>>
@@ -47,7 +47,7 @@ modal-header-border: <<colour very-muted-foreground>>
 muted-foreground: #ababab
 notification-background: <$macrocall $name="color-lightness" color=<<colour primary>> value="35" />
 notification-border: <<colour secondary-button-border>>
-page-background: {{{ [colour[background]lightness[-7]] }}}
+page-background: {{{ [colour[background]lightness[-11]] }}}
 pre-background: <<colour code-background>>
 pre-border: <<colour code-border>>
 primary: {{{ [{$:/themes/cdr/captivate/settings/color-primary}lightness[range(30,85)]] }}}
@@ -93,7 +93,7 @@ tiddler-border: <<colour background>>
 tiddler-controls-foreground-hover: #d0d0d0
 tiddler-controls-foreground-selected: #c0c0c0
 tiddler-controls-foreground: {{{ [colour[background]lightness[+36]]}}}
-tiddler-editor-background: #0e0e0e
+tiddler-editor-background: #121212
 tiddler-editor-border-image:
 tiddler-editor-border: <$macrocall $name="color-mix" color1=<<colour tiddler-editor-background>> color2="#f0f0f0" weight="0.3" />
 tiddler-editor-fields-even: rgba(255, 255, 255, 0.17)
