@@ -147,7 +147,7 @@ Color Schemes<span style="font-size:0.8em;padding-left:10px">{{$:/core/images/do
 </div>
 
 <$reveal state=<<qualify "$:/state/popup/colorschemes">> type="popup" position="below" animate="yes">
-<div class="tc-drop-down">
+<div class="tc-drop-down" style="min-width:max-content;max-height:45vh;overflow-y:scroll;">
 <<listColorSchemes>>
 </div>
 </$reveal>
