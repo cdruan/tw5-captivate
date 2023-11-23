@@ -173,6 +173,22 @@ button.cv-secondary-btn:not(:disabled):hover {
 	background-color: <<colour secondary-button-background-hover>>;
 }
 
+/*
+ counter vanilla's ".tc-sidebar-lists button" overriding .tc-btn-invisible rule
+ */
+.tc-sidebar-lists .tc-btn-invisible {
+	color: <<colour sidebar-foreground>>;
+	fill: <<colour sidebar-foreground>>;
+}
+
+.tc-sidebar-lists button:disabled.tc-btn-invisible  {
+	color: <<colour sidebar-muted-foreground>>;
+}
+
+.tc-btn-invisible.tc-missing-tiddler-label {
+	color: <<colour sidebar-tiddler-link-foreground>>;
+}
+
 /* POPUPS */
 
 .tc-drop-down,
