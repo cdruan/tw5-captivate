@@ -179,7 +179,6 @@ button.cv-secondary-btn:not(:disabled):hover {
 .tc-block-dropdown {
 	margin: 0px;
 	padding: 5px 8px 5px 0px;
-	min-width: auto;
 	/* max-height: 30vh; */
 	overflow-y: auto;
 	font-weight: normal;
@@ -204,6 +203,11 @@ button.cv-secondary-btn:not(:disabled):hover {
 	text-align: left !important;
 }
 
+.tc-drop-down button.tc-btn-invisible {
+	padding: 2px 3px;
+	font-size: 85%;
+}
+
 .tc-drop-down a:hover,
 .tc-drop-down a.tc-tiddlylink:hover,
 .tc-drop-down button:hover,
@@ -216,6 +220,7 @@ a.tc-tiddlylink.tc-plugin-info:hover {
 	fill: <<colour selection-foreground>>;
 	background-color: {{{ [colour[selection-background]alpha[0.45]] }}};
 	opacity: 1;
+	text-decoration: none;
 }
 
 .tc-chosen {
@@ -253,6 +258,7 @@ a.tc-tiddlylink.tc-plugin-info:hover {
 	color: {{{ [colour[dirty-indicator]autocontrast[]] }}};
 	fill: {{{ [colour[dirty-indicator]autocontrast[]] }}};
 }
+
 /* TABS */
 
 div.tc-tab-set {
